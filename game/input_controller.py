@@ -16,6 +16,7 @@ class InputController():
         self.listener = keyboard.Listener(
             on_press=self.on_keydown,
             on_release=self.on_keyup)
+        self.listener.daemon = True
         self.listener.start()
     
 
@@ -24,10 +25,19 @@ class InputController():
 
 
     def on_keydown(self, key):
-        print(key)
         if key == keyboard.Key.esc:
             self.game.end_game()
+            return
+        
+        key_character = None
+        try:
+            key_character = key.char
+        except:
+            pass
+        
+        if key_character == 'a':
+            self.game.flip_test_char()
 
 
     def on_keyup(self, key):
-        print(key)
+        pass
