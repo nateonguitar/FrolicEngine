@@ -7,7 +7,7 @@ from .console_printer import ConsolePrinter
 class Game():
     game_over = False
     current_speed = 0.5
-    time_between_draws = 0.5
+    time_between_draws = 1 / 30
     printer = None
     input_controller = None
     timer_thread = None
