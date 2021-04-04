@@ -7,7 +7,7 @@ from .console_printer import ConsolePrinter
 class Game():
     game_over = False
     current_speed = 0.5
-    time_between_draws = 1 / 30
+    game_loop_speed = 1 / 30
     printer = None
     input_controller = None
     timer_thread = None
@@ -47,7 +47,7 @@ class Game():
         #       at this stage
         ch = 'X' if self.character_flipper else 'O'
         overrides = [
-            ['press "A" to swap the character'],
+            ['press "A" to swap the character, ESC to quit'],
             [' ', '╔', '═','═', '═', '╗',],
             [' ', '║', ' ', ch, ' ', '║',],
             [' ', '╚', '═','═', '═', '╝',],
@@ -71,7 +71,7 @@ class Game():
 
         # wait some time on a separate thread then run game_loop again
         # this avoids using a spin-lock
-        self.timer_thread = threading.Timer(self.time_between_draws, self.game_loop)
+        self.timer_thread = threading.Timer(self.game_loop_speed, self.game_loop)
         self.timer_thread.start()
 
 
