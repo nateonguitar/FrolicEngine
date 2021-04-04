@@ -26,8 +26,18 @@ class Game():
 
     def draw(self):
         self.printer.clear_screen()
-        self.printer.char_at(5, 5, 'W')
-        print('draw')
+        # TODO: don't draw this shape, this is a test
+        shape = [
+            [1, 1, 1, 1, 1,],
+            [1, 0, 0, 0, 1,],
+            [1, 0, 0, 0, 1,],
+            [1, 0, 0, 0, 1,],
+            [1, 1, 1, 1, 1,],
+        ]
+        for row in range(0, len(shape)):
+            for col in range(0, len(shape[row])):
+                if shape[row][col] == 1:
+                    self.printer.char_at(col, row, 'W')
 
 
     def game_loop(self):
@@ -47,3 +57,4 @@ class Game():
     def end_game(self):
         self.input_controller.stop_watching_key_presses()
         self.timer_thread.cancel()
+        self.printer.clear_screen()

@@ -1,5 +1,4 @@
 import os
-import termcolor
 
 
 class ConsolePrinter():
@@ -17,9 +16,11 @@ class ConsolePrinter():
             print(line_str)
 
 
-    # TODO: won't print at the right column, row works though
+    # TODO: colors not working yet
     def char_at(self, x, y, char, color='white'):
         _x = str(x)
         _y = str(y)
-        print(f"\033[{_y};{_x}H")
-        print(f"{termcolor.colored(char, color)}")
+        ansi_start = "\033["
+        ansi_end = "\033[0m"
+        position = f"{y+1};{_x}H"
+        print(f"{ansi_start}{position}{char}{ansi_end}")
