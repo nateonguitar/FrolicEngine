@@ -35,9 +35,7 @@ class ConsolePrinter():
 
     # TODO: colors not working yet
     def char_at(self, x, y, char, color='white'):
-        _x = str(x)
-        _y = str(y)
-        position = f"{y+1};{_x}H"
+        position = f"{y+1};{x}H"
         print(f"{self.ansi_start}{position}{char}{self.ansi_end}")
 
     
