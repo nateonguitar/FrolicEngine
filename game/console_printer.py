@@ -34,7 +34,7 @@ class ConsolePrinter():
 
 
     # TODO: colors not working yet
-    def char_at(self, x, y, char, color='white'):
+    def print_character_at(self, x, y, char, color='white'):
         position = f"{y+1};{x}H"
         print(f"{self.ansi_start}{position}{char}{self.ansi_end}")
 
@@ -50,12 +50,12 @@ class ConsolePrinter():
                 prev_char = self.previous_screen[line][column]
                 new_char = screen[line][column]
                 if new_char != prev_char:
-                    self.char_at(column, line, new_char)
+                    self.print_character_at(column, line, new_char)
 
         # So we don't leave the cursor in an annoying place between draws
         # we will draw the final character at the bottom right corner
         bottom_right_char = screen[lines-1][columns-1]
-        self.char_at(columns-1, lines-2, bottom_right_char)
+        self.print_character_at(columns-1, lines-2, bottom_right_char)
 
         # Store the current state of the screen so we can
         # use it again next cycle
