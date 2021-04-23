@@ -30,7 +30,24 @@ class Shape():
     def get_facing_right(self):
         raise NotImplementedError
 
-class Square(Shape):
     
-   
+class Square(Shape):
+    shape_array = [
+        ['▣','▣'],
+        ['▣','▣']
+    ]
+
+    def get_shape(self):
+        return self.shape_array
         
+    def get_facing_up(self):
+        return self.shape_array
+    
+    def get_facing_down(self):
+        return self.shape_array
+    
+    def get_facing_left(self):
+        return self.shape_array
+
+    def get_facing_right(self):
+        return self.shape_array        

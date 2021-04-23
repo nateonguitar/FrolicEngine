@@ -2,7 +2,7 @@ import os
 import threading
 from .input_controller import InputController
 from .console_printer import ConsolePrinter
-
+from .shape import Square
 
 class Game():
     game_over = False
@@ -45,18 +45,34 @@ class Game():
         # TODO: Replace this with real game object data,
         #       we can logically replace anything we want on the screen
         #       at this stage
-        ch = 'X' if self.character_flipper else 'O'
+
+        # Test drawing shapes
+        square_instance = Square()
+        shape = square_instance.get_shape()
+        
+        # left row row doesnt show, keep spaces
         overrides = [
-            ['press "A" to swap the character, ESC to quit'],
-            [' ', '╔', '═','═', '═', '╗',],
-            [' ', '║', ' ', ch, ' ', '║',],
-            [' ', '╚', '═','═', '═', '╝',],
+            [' ', '╔', '═','═', '═', '═','╗',],
+            [' ', '║', ' ', ' ', ' ', ' ', '║',],
+            [' ', '║', ' ', ' ', ' ', ' ', '║',],
+            [' ','║', ' ', ' ', ' ', ' ', '║',],
+            [' ', '║', ' ', ' ', ' ', ' ', '║',],
+            [' ', '╚', '═', '═', '═','═','╝',],
         ]
+
         for line_number in range(0, len(overrides)):
             line = overrides[line_number]
             for column_number in range(0, len(line)):
-                override_char = overrides[line_number][column_number]
+                if line_number <= len(shape) and line_number > 0:
+                    
+                    if column_number -2 < len(shape[line_number-1]) and column_number > 1:
+                        override_char = shape[line_number-1][column_number-2]
+                    else:
+                        override_char = overrides[line_number][column_number]
+                else:
+                    override_char = overrides[line_number][column_number]
                 screen[line_number][column_number] = override_char
+        
 
         self.printer.draw_screen(screen)
 
