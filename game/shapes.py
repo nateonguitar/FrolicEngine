@@ -1,3 +1,0 @@
-
-class Shapes():
-    pass
