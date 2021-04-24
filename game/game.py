@@ -60,10 +60,10 @@ class Game():
         overrides = [
             ["Press 'w' arrow to spin shape!"],
             [' ', '╔', '═','═', '═', '═','╗'],
-            [' ', '║', ' ', ' ', ' ', ' ', '║'],
-            [' ', '║', ' ', ' ', ' ', ' ', '║'],
-            [' ','║', ' ', ' ', ' ', ' ', '║'],
-            [' ', '║', ' ', ' ', ' ', ' ', '║'],
+            [' ', '║', '°', '°', '°', '°', '║'],
+            [' ', '║', '°', '°', '°', '°', '║'],
+            [' ','║', '°', '°', '°', '°', '║'],
+            [' ', '║', '°', '°', '°', '°', '║'],
             [' ', '╚', '═', '═', '═','═','╝'],
         ]
 
@@ -73,8 +73,8 @@ class Game():
             for column_number in range(0, len(line)):
                 if line_number > 1 and column_number > 1:
                     if line_number -2 < len(shape):
-                        if column_number -2 < len(shape[line_number-2]):
-                            override_char = shape[line_number-2][column_number-2]
+                        if column_number -2 < len(shape[line_number-2]) and shape[line_number-2][column_number-2]:
+                            override_char = self.shape_instance.get_shape_char()
                         else:
                             override_char = overrides[line_number][column_number]
                     else:
