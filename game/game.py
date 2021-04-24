@@ -2,7 +2,7 @@ import os
 import threading
 from .input_controller import InputController
 from .console_printer import ConsolePrinter
-
+from .shape import Square, Line, ForwardsL, BackwardsL, ForwardsZ, BackwardsZ, TShape
 
 class Game():
     game_over = False
@@ -18,6 +18,10 @@ class Game():
     def flip_test_char(self):
         self.character_flipper = not self.character_flipper
 
+
+    shape_instance = TShape() 
+    def rotate_test_shape(self):
+        self.shape_instance.spin()
 
     def start(self):
         self.printer = ConsolePrinter()
@@ -45,18 +49,40 @@ class Game():
         # TODO: Replace this with real game object data,
         #       we can logically replace anything we want on the screen
         #       at this stage
-        ch = 'X' if self.character_flipper else 'O'
+
+        # Test drawing shapes
+        
+        shape = self.shape_instance.get_shape()
+        
+
+
+        # left row row doesnt show, keep spaces
         overrides = [
-            ['press "A" to swap the character, ESC to quit'],
-            [' ', '╔', '═','═', '═', '╗',],
-            [' ', '║', ' ', ch, ' ', '║',],
-            [' ', '╚', '═','═', '═', '╝',],
+            ["Press 'w' arrow to spin shape!"],
+            [' ', '╔', '═','═', '═', '═','╗'],
+            [' ', '║', '°', '°', '°', '°', '║'],
+            [' ', '║', '°', '°', '°', '°', '║'],
+            [' ','║', '°', '°', '°', '°', '║'],
+            [' ', '║', '°', '°', '°', '°', '║'],
+            [' ', '╚', '═', '═', '═','═','╝'],
         ]
+
+        # this is ugly 
         for line_number in range(0, len(overrides)):
             line = overrides[line_number]
             for column_number in range(0, len(line)):
-                override_char = overrides[line_number][column_number]
+                if line_number > 1 and column_number > 1:
+                    if line_number -2 < len(shape):
+                        if column_number -2 < len(shape[line_number-2]) and shape[line_number-2][column_number-2]:
+                            override_char = self.shape_instance.get_shape_char()
+                        else:
+                            override_char = overrides[line_number][column_number]
+                    else:
+                        override_char = overrides[line_number][column_number]
+                else: 
+                    override_char = overrides[line_number][column_number]
                 screen[line_number][column_number] = override_char
+        
 
         self.printer.draw_screen(screen)
 

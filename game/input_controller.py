@@ -38,6 +38,8 @@ class InputController():
         if key_character == 'a':
             self.game.flip_test_char()
 
+        if key_character == 'w':
+            self.game.rotate_test_shape()
 
     def on_keyup(self, key):
         pass
