@@ -4,12 +4,20 @@ from pynput import keyboard
 class InputController():
 
     # handy reference
-    game = None
     listener = None
-
+    on_keydown_callback = None
+    on_keyup_callback = None
 
     def __init__(self, game):
         self.game = game
+
+
+    def set_on_keydown(self, func):
+        self.on_keydown_callback = func
+
+
+    def set_on_keyup(self, func):
+        self.on_keyup_callback = func
 
 
     def start_watching_key_presses(self):
@@ -25,21 +33,9 @@ class InputController():
 
 
     def on_keydown(self, key):
-        if key == keyboard.Key.esc:
-            self.game.end_game()
-            return
-        
-        key_character = None
-        try:
-            key_character = key.char
-        except:
-            pass
-        
-        if key_character == 'a':
-            self.game.flip_test_char()
-
-        if key_character == 'w':
-            self.game.rotate_test_shape()
+        if self.on_keydown_callback:
+            self.on_keydown_callback(key)
 
     def on_keyup(self, key):
-        pass
+        if self.on_keyup_callback:
+            self.on_keyup_callback(key)
