@@ -18,13 +18,15 @@ for i in range(0, len(available_games)):
     g = available_games[i]
     print(f'{i}: {g.label} | {g.description}')
 
+GameChoice = None
 try:
     choice = input('Choose a game by number: ')
     choice_int = int(choice)
     if choice_int < 0:
         raise Exception('Input not in range')
     GameChoice = available_games[choice_int].game_class
-    game = GameChoice()
-    game.start()
 except:
     print('\nbad input\n')
+
+if GameChoice:
+    game = GameChoice()
