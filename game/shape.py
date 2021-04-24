@@ -36,43 +36,49 @@ class Shape():
             return self.shape_array_up
     
 class Square(Shape):
-    shape_array = [
+    shape_array_up = [
         ['▣','▣'],
         ['▣','▣']
     ]
 
-    def spin(self):
-        return self.shape_array
+    shape_array_down = [
+        ['▣','▣'],
+        ['▣','▣']
+    ]
 
-    def get_shape(self):
-        return self.shape_array
-              
+    shape_array_left = [
+        ['▣','▣'],
+        ['▣','▣']
+    ]
+
+    shape_array_right = [
+        ['▣','▣'],
+        ['▣','▣']
+    ]
 
 class Line(Shape):
-    shape_array = [
+    shape_array_up = [
         ['▣'],
         ['▣'],
         ['▣'],
         ['▣']
     ]
     
-    shape_array_side = [
+    shape_array_down = [
+        ['▣'],
+        ['▣'],
+        ['▣'],
+        ['▣']
+    ]
+
+    shape_array_left = [
         ['▣', '▣', '▣', '▣']
     ]
-        
-    def get_shape(self):
-        if self.orientation == 'u':
-            return self.shape_array
-
-        if self.orientation == 'r':
-            return self.shape_array_side
-
-        if self.orientation == 'd': 
-            return self.shape_array
-
-        if self.orientation == 'l':
-            return self.shape_array_side
-      
+    
+    shape_array_right = [
+        ['▣', '▣', '▣', '▣']
+    ]
+    
 class ForwardsL(Shape):
     shape_array_up = [
         ['▣'],
@@ -94,4 +100,96 @@ class ForwardsL(Shape):
     shape_array_right = [
         ['▣', '▣', '▣'],
         ['▣', ' ', ' ']
+    ]
+
+class BackwardsL(Shape):
+    shape_array_up = [
+        [' ', '▣'],
+        [' ', '▣'],
+        ['▣', '▣']
+    ]
+
+    shape_array_down = [
+        ['▣', '▣'],
+        ['▣', ' '],
+        ['▣', ' '],
+    ]
+
+    shape_array_left = [
+        ['▣', ' ', ' '],
+        ['▣', '▣', '▣']
+    ]
+
+    shape_array_right = [
+        ['▣', '▣', '▣'],
+        [' ', ' ', '▣']
+    ]
+
+class ForwardsZ(Shape):
+    shape_array_up = [
+        ['▣', '▣'],
+        [' ', '▣', '▣'],
+    ]
+
+    shape_array_down = [
+        ['▣', '▣', ' '],
+        [' ', '▣', '▣'],
+    ]
+
+    shape_array_left = [
+        [' ', '▣'],
+        ['▣', '▣'],
+        ['▣', ' ']
+    ]
+
+    shape_array_right = [
+        [' ', '▣'],
+        ['▣', '▣'],
+        ['▣', ' ']
+    ]
+
+class BackwardsZ(Shape):
+    shape_array_up = [
+        [' ', '▣', '▣'],
+        ['▣', '▣', ' '],
+    ]
+
+    shape_array_down = [
+        [' ', '▣', '▣'],
+        ['▣', '▣', ' '],
+    ]
+
+    shape_array_left = [
+        ['▣', ' '],
+        ['▣', '▣'],
+        [' ', '▣']
+    ]
+
+    shape_array_right = [
+        ['▣', ' '],
+        ['▣', '▣'],
+        [' ', '▣']
+    ]
+
+class TShape(Shape):
+    shape_array_up = [
+        [' ', '▣', ' '],
+        ['▣', '▣', '▣'],
+    ]
+
+    shape_array_down = [
+        ['▣', '▣', '▣'],
+        [' ', '▣', ' '],
+    ]
+
+    shape_array_left = [
+        [' ', '▣'],
+        ['▣', '▣'],
+        [' ', '▣']
+    ]
+
+    shape_array_right = [
+        ['▣', ' '],
+        ['▣', '▣'],
+        ['▣', ' ']
     ]

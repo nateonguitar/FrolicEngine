@@ -2,7 +2,7 @@ import os
 import threading
 from .input_controller import InputController
 from .console_printer import ConsolePrinter
-from .shape import Square, Line, ForwardsL
+from .shape import Square, Line, ForwardsL, BackwardsL, ForwardsZ, BackwardsZ, TShape
 
 class Game():
     game_over = False
@@ -19,7 +19,7 @@ class Game():
         self.character_flipper = not self.character_flipper
 
 
-    shape_instance = ForwardsL() 
+    shape_instance = TShape() 
     def rotate_test_shape(self):
         self.shape_instance.spin()
 
