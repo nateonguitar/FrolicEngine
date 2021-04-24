@@ -2,7 +2,7 @@ import os
 import threading
 from .input_controller import InputController
 from .console_printer import ConsolePrinter
-from .shape import Square
+from .shape import Square, Line, ForwardsL
 
 class Game():
     game_over = False
@@ -18,6 +18,10 @@ class Game():
     def flip_test_char(self):
         self.character_flipper = not self.character_flipper
 
+
+    shape_instance = ForwardsL() 
+    def rotate_test_shape(self):
+        self.shape_instance.spin()
 
     def start(self):
         self.printer = ConsolePrinter()
@@ -47,29 +51,35 @@ class Game():
         #       at this stage
 
         # Test drawing shapes
-        square_instance = Square()
-        shape = square_instance.get_shape()
         
+        shape = self.shape_instance.get_shape()
+        
+
+
         # left row row doesnt show, keep spaces
         overrides = [
-            [' ', '╔', '═','═', '═', '═','╗',],
-            [' ', '║', ' ', ' ', ' ', ' ', '║',],
-            [' ', '║', ' ', ' ', ' ', ' ', '║',],
-            [' ','║', ' ', ' ', ' ', ' ', '║',],
-            [' ', '║', ' ', ' ', ' ', ' ', '║',],
-            [' ', '╚', '═', '═', '═','═','╝',],
+            ["Press 'w' arrow to spin shape!"],
+            [' ', '╔', '═','═', '═', '═','╗'],
+            [' ', '║', ' ', ' ', ' ', ' ', '║'],
+            [' ', '║', ' ', ' ', ' ', ' ', '║'],
+            [' ','║', ' ', ' ', ' ', ' ', '║'],
+            [' ', '║', ' ', ' ', ' ', ' ', '║'],
+            [' ', '╚', '═', '═', '═','═','╝'],
         ]
 
+        # this is ugly 
         for line_number in range(0, len(overrides)):
             line = overrides[line_number]
             for column_number in range(0, len(line)):
-                if line_number <= len(shape) and line_number > 0:
-                    
-                    if column_number -2 < len(shape[line_number-1]) and column_number > 1:
-                        override_char = shape[line_number-1][column_number-2]
+                if line_number > 1 and column_number > 1:
+                    if line_number -2 < len(shape):
+                        if column_number -2 < len(shape[line_number-2]):
+                            override_char = shape[line_number-2][column_number-2]
+                        else:
+                            override_char = overrides[line_number][column_number]
                     else:
                         override_char = overrides[line_number][column_number]
-                else:
+                else: 
                     override_char = overrides[line_number][column_number]
                 screen[line_number][column_number] = override_char
         
