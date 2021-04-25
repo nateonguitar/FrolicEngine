@@ -9,7 +9,7 @@ from .shape import *
 class TetrisGame(Game):
 
     grid = Grid()
-    start_shape_position: Vector2 = None
+    start_shape_position : Vector2 = None
     shape : Shape = None
 
     def __init__(self):
