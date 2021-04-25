@@ -1,16 +1,15 @@
+from abc import ABC, abstractmethod
 import os
 import threading
-from abc import ABC, abstractmethod
+import datetime
 
 from .input_controller import InputController
 from .console_printer import ConsolePrinter
 
 class Game(ABC):
 
-    stopped = False
-
     def __init__(self, fps=30):
-
+        self.stopped = False
         self.screen = []
         self.game_loop_speed = 1 / fps
         self.printer = None
@@ -21,6 +20,7 @@ class Game(ABC):
         self.input_controller.start_watching_key_presses()
         self.printer.clear_screen()
         self.empty_screen()
+        self.current_time = datetime.datetime.now()
         self.game_loop()
 
 
@@ -29,7 +29,7 @@ class Game(ABC):
 
 
     @abstractmethod
-    def update(self):
+    def update(self, deltatime):
         pass
 
 
@@ -46,7 +46,10 @@ class Game(ABC):
 
 
     def game_loop(self):
-        self.update()
+        new_time = datetime.datetime.now()
+        deltatime = new_time - self.current_time
+        self.current_time = new_time
+        self.update(deltatime)
         self.draw()
 
         if self.stopped:

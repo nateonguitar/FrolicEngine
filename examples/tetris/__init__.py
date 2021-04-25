@@ -1,29 +1,48 @@
-from game import Game, Position
+import random
+
+from game import Game, Vector2
 from pynput import keyboard
+
+from .grid import Grid
 from .shape import *
 
 class TetrisGame(Game):
 
-    shape_instance = None
-    grid_position = Position(x=1, y=1)
+    grid = Grid()
+    start_shape_position: Vector2 = None
+    shape : Shape = None
 
     def __init__(self):
         super().__init__()
-        self.shape_instance = self.get_next_shape()
-        self.start_shape_position = Position(x=0, y=0)
-        self.shape_instance.position = self.start_shape_position.clone()
+        self.deltatime = None
+        self.start_shape_position = self.grid.position.clone()
+        self.start_shape_position.x += int(self.grid.size.x/2) - 2
+        self.shape = self.get_next_shape()
         self.set_on_keydown(self.on_key_down)
-        self.ready = True
 
 
     def get_next_shape(self):
-        # TODO: randomize this
-        return Line()
+        shapes = [
+            Square,
+            Line,
+            ForwardsL,
+            BackwardsL,
+            ForwardsZ,
+            BackwardsZ,
+            TShape,
+        ]
+        shape = random.choice(shapes)()
+        shape.position = self.start_shape_position.clone()
+        return shape
 
 
     def on_key_down(self, key):
         if key == keyboard.Key.esc:
             self.end_game()
+            return
+        
+        if key == keyboard.Key.space:
+            self.shape = self.get_next_shape()
             return
 
         key_character = None
@@ -33,60 +52,75 @@ class TetrisGame(Game):
             pass
 
         if key_character == 'w':
-            self.shape_instance.spin()
+            self.shape.spin()
+            return
 
         if key_character == 'a':
-            self.shape_instance.position.x -= 1
+            self.shape.position.x -= 1
+            return
 
         if key_character == 'd':
-            self.shape_instance.position.x += 1
+            self.shape.position.x += 1
+            return
 
 
-    def update(self):
-        pass
+    def update(self, deltatime):
+        self.deltatime = deltatime
 
 
     def draw(self):
-        self.draw_instructions()
         self.draw_grid()
-        if self.shape_instance:
+        self.draw_instructions()
+        if self.shape:
             self.draw_shape()
+        self.draw_info()
         super().draw()
 
 
-    def draw_instructions(self):
-        self.screen[0][0] = "Press 'w' arrow to spin shape!"
 
     def draw_grid(self):
-        # left row row doesnt show, keep spaces
-        matrix = [
-            [ '╔', '═', '═', '═', '═', '═', '═', '╗'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '║', '°', '°', '°', '°', '°', '°', '║'],
-            [ '╚', '═', '═', '═', '═', '═', '═', '╝'],
-        ]
+        pos = self.grid.position
+        matrix = self.grid.matrix
         for i in range(0, len(matrix)):
             row = matrix[i]
             for j in range(0, len(row)):
                 char = row[j]
-                x = j + self.grid_position.x
-                y = i + self.grid_position.y
+                x = j + pos.x
+                y = i + pos.y
                 self.screen[y][x] = char
 
 
     def draw_shape(self):
-        matrix = self.shape_instance.matrix
+        # Note: Shape positions are NOT relative to the grid position
+        matrix = self.shape.matrix
+        offset = Vector2(
+            x=self.shape.position.x + 1,
+            y=self.shape.position.y + 1
+        )
         for i in range(0, len(matrix)):
             row = matrix[i]
             for j in range(0, len(row)):
                 should_draw = row[j]
-                
                 if should_draw:
-                    x = j + self.shape_instance.position.x + self.grid_position.x + 1
-                    y = i + self.shape_instance.position.y + self.grid_position.y + 1
-                    self.screen[y][x] = self.shape_instance.char
+                    x = j + offset.x
+                    y = i + offset.y
+                    self.screen[y][x] = self.shape.char
+
+
+    def draw_instructions(self):
+        self.screen[self.grid.position.y + self.grid.size.y][0] = "Press 'w' arrow to spin shape!"
+
+
+    def draw_info(self):
+        left_offset = self.grid.position.x + self.grid.size.x + 2
+        info = []
+        if self.grid:
+            info.append(f'Grid Position:  {self.grid.position}     ')
+        if self.shape:
+            info.append(f'Shape:          {self.shape}             ')
+            info.append(f'Shape Position: {self.shape.position}    ')
+        if self.deltatime.microseconds:
+            fps = str(int(1000000 / self.deltatime.microseconds))
+            info.append(f'FPS:            {fps}                    ')
+        for i in range(0, len(info)):
+            self.screen[i+1][left_offset] = info[i]

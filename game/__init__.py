@@ -1,2 +1,2 @@
 from .game import *
-from .position import *
+from .vector2 import *
