@@ -114,11 +114,11 @@ class TetrisGame(Game):
     def draw_info(self):
         left_offset = self.grid.position.x + self.grid.size.x + 2
         info = []
-        if self.grid:
-            info.append(f'Grid Position:  {self.grid.position}     ')
         if self.shape:
             info.append(f'Shape:          {self.shape}             ')
             info.append(f'Shape Position: {self.shape.position}    ')
+        if self.grid:
+            info.append(f'Grid Position:  {self.grid.position}     ')
         if self.deltatime.microseconds:
             fps = str(int(1000000 / self.deltatime.microseconds))
             info.append(f'FPS:            {fps}                    ')
