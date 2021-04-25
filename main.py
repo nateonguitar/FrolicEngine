@@ -13,10 +13,11 @@ class AvailableGame():
 available_games = (
     AvailableGame(label='Tetris', game_class=TetrisGame, description="It's Tetris baby!"),
 )
-
+print('')
 for i in range(0, len(available_games)):
     g = available_games[i]
     print(f'{i}: {g.label} | {g.description}')
+print('')
 
 GameChoice = None
 try:

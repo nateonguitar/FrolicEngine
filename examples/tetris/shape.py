@@ -5,6 +5,7 @@ class Shape():
 
     matrix = []
     char = '▣'
+    # Vector2
     position = None
 
 
@@ -23,6 +24,9 @@ class Shape():
                 end -= 1
         return self.matrix
 
+    def __str__(self):
+        return 'Shape'
+
 
 class Square(Shape):
     matrix = [
@@ -30,6 +34,8 @@ class Square(Shape):
         [1, 1],
     ]
 
+    def __str__(self):
+        return 'Square'
 
 class Line(Shape):
     matrix = [
@@ -38,6 +44,8 @@ class Line(Shape):
         [0, 1, 0, 0],
         [0, 1, 0, 0],
     ]
+    def __str__(self):
+        return 'Line'
 
 
 class ForwardsL(Shape):
@@ -46,6 +54,8 @@ class ForwardsL(Shape):
         [1, 0, 0],
         [1, 1, 0],
     ]
+    def __str__(self):
+        return 'ForwardsL'
 
 
 class BackwardsL(Shape):
@@ -54,6 +64,8 @@ class BackwardsL(Shape):
         [0, 1, 0],
         [1, 1, 0],
     ]
+    def __str__(self):
+        return 'BackwardsL'
 
 
 class ForwardsZ(Shape):
@@ -62,6 +74,8 @@ class ForwardsZ(Shape):
         [1, 1, 0],
         [0, 1, 1],
     ]
+    def __str__(self):
+        return 'ForwardsZ'
 
 
 class BackwardsZ(Shape):
@@ -70,6 +84,8 @@ class BackwardsZ(Shape):
         [0, 1, 1],
         [1, 1, 0],
     ]
+    def __str__(self):
+        return 'BackwardsZ'
 
 
 class TShape(Shape):
@@ -78,3 +94,5 @@ class TShape(Shape):
         [1, 1, 1],
         [0, 0, 0],
     ]
+    def __str__(self):
+        return 'TShape'
