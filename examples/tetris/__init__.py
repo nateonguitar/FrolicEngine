@@ -17,6 +17,7 @@ class TetrisGame(Game):
         self.deltatime = None
         self.start_shape_position = self.grid.position.clone()
         self.start_shape_position.x += int(self.grid.size.x/2) - 2
+        self.start_shape_position.y += 1
         self.shape = self.get_next_shape()
         self.set_on_keydown(self.on_key_down)
 
@@ -94,8 +95,8 @@ class TetrisGame(Game):
         # Note: Shape positions are NOT relative to the grid position
         matrix = self.shape.matrix
         offset = Vector2(
-            x=self.shape.position.x + 1,
-            y=self.shape.position.y + 1
+            x=self.shape.position.x,
+            y=self.shape.position.y
         )
         for i in range(0, len(matrix)):
             row = matrix[i]
