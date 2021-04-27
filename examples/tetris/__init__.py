@@ -57,12 +57,29 @@ class TetrisGame(Game):
             return
 
         if key_character == 'a':
-            self.shape.position.x -= 1
+            self.move_shape('left')
             return
 
         if key_character == 'd':
-            self.shape.position.x += 1
+            self.move_shape('right')
             return
+
+    def move_shape(self, direction):
+        # Note: we have to pretend the grid is smaller than it really is to
+        #       take the grid's outer box shape into account
+        spos = self.shape.position
+        gpos = self.grid.position
+        swidth = self.shape.size.x
+        gwidth = self.grid.size.x
+        if direction == 'left':
+            spos.x -= 1
+            if spos.x < gpos.x + 1:
+                spos.x = gpos.x + 1
+        if direction == 'right':
+            spos.x += 1
+            if spos.x > gpos.x + gwidth - swidth - 1:
+                spos.x = gpos.x + gwidth - swidth - 1
+
 
 
     def update(self, deltatime):
@@ -106,6 +123,12 @@ class TetrisGame(Game):
                     x = j + offset.x
                     y = i + offset.y
                     self.screen[y][x] = self.shape.char
+                # This is for testing purposes, it prints over the empty matrix
+                # spots too
+                else:
+                    x = j + offset.x
+                    y = i + offset.y
+                    self.screen[y][x] = ' '
 
 
     def draw_instructions(self):
