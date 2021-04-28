@@ -1,4 +1,5 @@
 import numpy
+from game.vector2 import Vector2
 
 
 class Shape():
@@ -23,6 +24,15 @@ class Shape():
                 start += 1
                 end -= 1
         return self.matrix
+
+    @property
+    def size(self):
+        x = 0
+        y = len(self.matrix)
+        if y > 0:
+            x = len(self.matrix[0])
+        return Vector2(x=x, y=y)
+
 
     def __str__(self):
         return 'Shape'
