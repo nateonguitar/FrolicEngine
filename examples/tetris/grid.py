@@ -10,7 +10,6 @@ class Grid(GameObject):
     # ║°°°║
     # ╚═══╝
 
-    # todo make matrix as standalone variable and pass it into set_mastrix()
     def __init__(self):
         self.empty_char = '.' # '°'
         self.position = Vector2(x=5, y=0)

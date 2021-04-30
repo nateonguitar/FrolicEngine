@@ -36,7 +36,6 @@ class GameObject():
         except:
             return Vector2.zero()
 
-    # currently only works with a rectangular matrix
     def spinClockwise(self):
         num_rows = len(self.matrix) 
         num_cols = len(self.matrix[0])

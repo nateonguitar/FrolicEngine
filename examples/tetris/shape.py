@@ -83,9 +83,9 @@ class BackwardsZ(Shape):
 
     def __init__(self):
         _matrix = [
-        [0, 1, 1],
-        [1, 1, 0],
-    ]
+            [0, 1, 1],
+            [1, 1, 0],
+        ]
         super().__init__(matrix_shape = _matrix)
 
     def __str__(self):
