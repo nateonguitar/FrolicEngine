@@ -1,4 +1,4 @@
-import random
+mostimport random
 
 from game import Game
 from game.vector2 import Vector2
@@ -106,11 +106,7 @@ class TetrisGame(Game):
                 char = row[j]
                 x = j + pos.x
                 y = i + pos.y
-                try:
-                    self.screen[y][x] = char
-                except:
-                    # most likely we resized the console window
-                    pass
+                self.screen[y][x] = char
 
 
     def draw_shape(self):
