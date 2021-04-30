@@ -1,6 +1,7 @@
-import random
+mostimport random
 
-from game import Game, Vector2
+from game import Game
+from game.vector2 import Vector2
 from pynput import keyboard
 
 from .grid import Grid
