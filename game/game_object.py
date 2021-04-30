@@ -2,10 +2,26 @@ from .vector2 import Vector2
 
 class GameObject():
 
-    def __init__(self):
-        self.matrix = []
+    def __init__(self, **kwargs):
+        self.set_matrix(**kwargs)
         self.position = Vector2(x=0, y=0)
 
+    def get_matrix(self):
+        return self.matrix
+    
+    def set_matrix(self, rows = 0, columns = 0, matrix_shape = [[0]]):
+        ''' 
+        Set the size and shape of the matrix.
+        Pass rows/columns OR matrix_shape NOT BOTH.
+        Must be rectagular. (all rows must be uniform)
+        '''
+
+        if rows < 0 or columns < 0:
+            self.matrix  = [[ 0 for _ in range(num_rows)] for _ in range(num_cols)]
+
+        else:
+            self.matrix = matrix_shape
+ 
     @property
     def size(self):
         try:

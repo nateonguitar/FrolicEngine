@@ -106,7 +106,11 @@ class TetrisGame(Game):
                 char = row[j]
                 x = j + pos.x
                 y = i + pos.y
-                self.screen[y][x] = char
+                try:
+                    self.screen[y][x] = char
+                except IndexError:
+                    print("Your terminal window is too small\nPlease resize the window and restart the game")
+                    self.end_game()
 
 
     def draw_shape(self):
