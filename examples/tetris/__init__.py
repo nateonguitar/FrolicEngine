@@ -1,6 +1,7 @@
 import random
 
-from game import Game, Vector2
+from game import Game
+from game.vector2 import Vector2
 from pynput import keyboard
 
 from .grid import Grid
@@ -105,7 +106,11 @@ class TetrisGame(Game):
                 char = row[j]
                 x = j + pos.x
                 y = i + pos.y
-                self.screen[y][x] = char
+                try:
+                    self.screen[y][x] = char
+                except:
+                    # most likely we resized the console window
+                    pass
 
 
     def draw_shape(self):
