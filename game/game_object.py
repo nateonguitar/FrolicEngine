@@ -19,3 +19,23 @@ class GameObject():
             return Vector2(x=x, y=y)
         except:
             return Vector2.zero()
+
+    # currently only works with a rectangular matrix
+    def spinClockwise(self):
+        num_rows = len(self.matrix) 
+        num_cols = len(self.matrix[0])
+        temp_matrix  = [[ 0 for _ in range(num_rows)] for _ in range(num_cols)]
+        for row in range(0, num_rows):
+            for col in range(0, num_cols):
+                temp_matrix[col][num_rows - row - 1] = self.matrix[row][col]
+        self.matrix = temp_matrix
+
+    def spinCounterClockwise(self):
+        num_rows = len(self.matrix) 
+        num_cols = len(self.matrix[0])
+        temp_matrix  = [[ 0 for _ in range(num_rows)] for _ in range(num_cols)]
+        for row in range(0, num_rows):
+            for col in range(0, num_cols):
+                temp_matrix[num_cols - 1 - col][row] = self.matrix[row][col]
+
+        self.matrix = temp_matrix

@@ -1,4 +1,4 @@
-mostimport random
+import random
 
 from game import Game
 from game.vector2 import Vector2
@@ -54,7 +54,7 @@ class TetrisGame(Game):
             pass
 
         if key_character == 'w':
-            self.shape.spin()
+            self.shape.spinClockwise()
             return
 
         if key_character == 'a':
