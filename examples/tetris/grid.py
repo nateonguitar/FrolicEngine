@@ -1,3 +1,4 @@
+from game.matrix_border import MatrixBorder
 from game.vector2 import Vector2
 from game.game_object import GameObject
 
@@ -25,21 +26,6 @@ class Grid(GameObject):
                 row.append(self.empty_char)
             _matrix.append(row)
 
-        # swap the corners for corner characters
-        _matrix[0][0] = '╔'
-        _matrix[0][matrix_size.x-1] = '╗'
-        _matrix[matrix_size.y-1][0] = '╚'
-        _matrix[matrix_size.y-1][matrix_size.x-1] = '╝'
-
-        # swap top and bottoms with '═' (skipping first and last positions)
-        for i in range(1, matrix_size.x-1):
-            _matrix[0][i] = '═'
-            _matrix[matrix_size.y-1][i] = '═'
-
-        # swap left and right sides with '║' (skipping first and last positions)
-        for row in _matrix:
-            # we have already swapped the corners, so we can rely on checking that
-            if row[0] == self.empty_char:
-                row[0] = '║'
-                row[matrix_size.x-1] = '║'
+        border = MatrixBorder(sides=MatrixBorder.SINGLE_LINE_THIN)
+        _matrix = border.apply_to_matrix(_matrix)
         super().__init__(matrix=_matrix)
