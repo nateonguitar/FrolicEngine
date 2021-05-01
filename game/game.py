@@ -21,7 +21,6 @@ class Game(ABC):
         self.printer.clear_screen()
         self.empty_screen()
         self.current_time = datetime.datetime.now()
-        self.game_loop()
 
 
     def empty_screen(self):

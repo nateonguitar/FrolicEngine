@@ -4,37 +4,20 @@ from game.game_object import GameObject
 
 
 class Shape(GameObject):
-
     char = '▣'
-
-    def spin(self):
-        """
-        transposing, then reversing rows gives O(n^2) time and O(1) space complexity
-        """
-        length = len(self.matrix)
-        self.matrix = numpy.transpose(self.matrix)
-        for row in range(0, length):
-            start = 0
-            end = length -1
-            while (start < end) :
-                self.matrix[row][start], self.matrix[row][end] = self.matrix[row][end], self.matrix[row][start]
-                start += 1
-                end -= 1
-        return self.matrix
-
 
     def __str__(self):
         return 'Shape'
 
 
 class Square(Shape):
-
+        
     def __init__(self):
-        super().__init__()
-        self.matrix = [
+        _matrix = [
             [1, 1],
             [1, 1],
         ]
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'Square'
@@ -42,27 +25,27 @@ class Square(Shape):
 class Line(Shape):
 
     def __init__(self):
-        super().__init__()
-        self.matrix = [
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
+        _matrix = [
+            [1],
+            [1],
+            [1],
+            [1],
         ]
+        super().__init__(matrix=_matrix)
 
-    def __str__(self):
+    def __str__(self):  
         return 'Line'
 
 
 class ForwardsL(Shape):
 
     def __init__(self):
-        super().__init__()
-        self.matrix = [
-            [1, 0, 0],
-            [1, 0, 0],
-            [1, 1, 0],
+        _matrix = [
+            [1, 0],
+            [1, 0],
+            [1, 1],
         ]
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'ForwardsL'
@@ -70,13 +53,14 @@ class ForwardsL(Shape):
 
 class BackwardsL(Shape):
 
+
     def __init__(self):
-        super().__init__()
-        self.matrix = [
-            [0, 1, 0],
-            [0, 1, 0],
-            [1, 1, 0],
+        _matrix = [
+            [0, 1],
+            [0, 1],
+            [1, 1],
         ]
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'BackwardsL'
@@ -85,12 +69,11 @@ class BackwardsL(Shape):
 class ForwardsZ(Shape):
 
     def __init__(self):
-        super().__init__()
-        self.matrix = [
-            [0, 0, 0],
+        _matrix = [
             [1, 1, 0],
             [0, 1, 1],
         ]
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'ForwardsZ'
@@ -99,12 +82,11 @@ class ForwardsZ(Shape):
 class BackwardsZ(Shape):
 
     def __init__(self):
-        super().__init__()
-        self.matrix = [
-            [0, 0, 0],
+        _matrix = [
             [0, 1, 1],
             [1, 1, 0],
         ]
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'BackwardsZ'
@@ -113,12 +95,11 @@ class BackwardsZ(Shape):
 class TShape(Shape):
 
     def __init__(self):
-        super().__init__()
-        self.matrix = [
+        _matrix = [
             [0, 1, 0],
             [1, 1, 1],
-            [0, 0, 0],
         ]
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'TShape'
