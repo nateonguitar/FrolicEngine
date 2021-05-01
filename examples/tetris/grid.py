@@ -42,5 +42,4 @@ class Grid(GameObject):
             if row[0] == self.empty_char:
                 row[0] = '║'
                 row[matrix_size.x-1] = '║'
-
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)

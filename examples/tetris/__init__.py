@@ -9,21 +9,21 @@ from .shape import *
 
 class TetrisGame(Game):
 
-    grid = Grid()
-    start_shape_position : Vector2 = None
-    shape : Shape = None
-
     def __init__(self):
         super().__init__()
+        self.grid = Grid()
+        self.start_shape_position : Vector2 = None
+        self.shape : Shape = None
         self.deltatime = None
-        self.start_shape_position = self.grid.position.clone()
+        self.start_shape_position: Vector2 = self.grid.position.clone()
         self.start_shape_position.x += int(self.grid.size.x/2) - 2
         self.start_shape_position.y += 1
         self.shape = self.get_next_shape()
         self.set_on_keydown(self.on_key_down)
+        self.game_loop()
 
 
-    def get_next_shape(self):
+    def get_next_shape(self) -> Shape:
         shapes = [
             Square,
             Line,
@@ -33,7 +33,8 @@ class TetrisGame(Game):
             BackwardsZ,
             TShape,
         ]
-        shape = random.choice(shapes)()
+        _ShapeClass = random.choice(shapes)
+        shape = _ShapeClass()
         shape.position = self.start_shape_position.clone()
         return shape
 
@@ -42,7 +43,7 @@ class TetrisGame(Game):
         if key == keyboard.Key.esc:
             self.end_game()
             return
-        
+
         if key == keyboard.Key.space:
             self.shape = self.get_next_shape()
             return
@@ -65,7 +66,8 @@ class TetrisGame(Game):
             self.move_shape('right')
             return
 
-    def move_shape(self, direction):
+
+    def move_shape(self, direction: str):
         # Note: we have to pretend the grid is smaller than it really is to
         #       take the grid's outer box shape into account
         spos = self.shape.position
@@ -88,7 +90,8 @@ class TetrisGame(Game):
 
 
     def draw(self):
-        self.draw_grid()
+        if self.grid:
+            self.draw_grid()
         self.draw_instructions()
         if self.shape:
             self.draw_shape()
@@ -130,10 +133,10 @@ class TetrisGame(Game):
                     self.screen[y][x] = self.shape.char
                 # This is for testing purposes, it prints over the empty matrix
                 # spots too
-                else:
-                    x = j + offset.x
-                    y = i + offset.y
-                    self.screen[y][x] = ' '
+                # else:
+                #     x = j + offset.x
+                #     y = i + offset.y
+                #     self.screen[y][x] = ' '
 
 
     def draw_instructions(self):

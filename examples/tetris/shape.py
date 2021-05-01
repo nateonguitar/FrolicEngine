@@ -17,7 +17,7 @@ class Square(Shape):
             [1, 1],
             [1, 1],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'Square'
@@ -31,7 +31,7 @@ class Line(Shape):
             [1],
             [1],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):  
         return 'Line'
@@ -45,7 +45,7 @@ class ForwardsL(Shape):
             [1, 0],
             [1, 1],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'ForwardsL'
@@ -60,7 +60,7 @@ class BackwardsL(Shape):
             [0, 1],
             [1, 1],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'BackwardsL'
@@ -73,7 +73,7 @@ class ForwardsZ(Shape):
             [1, 1, 0],
             [0, 1, 1],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'ForwardsZ'
@@ -86,7 +86,7 @@ class BackwardsZ(Shape):
             [0, 1, 1],
             [1, 1, 0],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'BackwardsZ'
@@ -99,7 +99,7 @@ class TShape(Shape):
             [0, 1, 0],
             [1, 1, 1],
         ]
-        super().__init__(matrix_shape = _matrix)
+        super().__init__(matrix=_matrix)
 
     def __str__(self):
         return 'TShape'
