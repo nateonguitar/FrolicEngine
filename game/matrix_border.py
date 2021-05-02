@@ -1,8 +1,11 @@
+from .matrix import Matrix
 from .vector2 import Vector2
 
 class MatrixBorder():
     """
-    defaults to Border.SINGLE_LINE_THIN line
+    ```
+    MatrixBorder(sides=MatrixBorder.SINGLE_LINE_THIN)
+    ```
     """
     SINGLE_LINE_THIN = {
         'top': '─',
@@ -36,7 +39,7 @@ class MatrixBorder():
     }
 
 
-    def __init__(self, sides:SINGLE_LINE_THIN):
+    def __init__(self, sides=SINGLE_LINE_THIN):
         self.top          = sides.get('top', None)
         self.top_left     = sides.get('top_left', None)
         self.top_right    = sides.get('top_right', None)
@@ -60,9 +63,11 @@ class MatrixBorder():
                 raise Exception('Sides must be a single character each')
 
 
-    def apply_to_matrix(self, matrix: list) -> list:
+    def apply(self, matrix: Matrix) -> Matrix:
         """
-        Replaces the outer sides of a matrix with the defined border characters
+        Does not modify the given matrix,
+        returns a new Matrix with the outer sides
+        replaced with the defined border characters
         ```
               °°°°°        ╔═══╗
               °°°°°        ║°°°║
@@ -71,15 +76,14 @@ class MatrixBorder():
               °°°°°        ╚═══╝
         ```
         """
-        matrix_size = Vector2.zero()
+        size = matrix.size
 
         # copy the matrix into a new matrix
         # also detect the matrix size for later use
         _matrix = []
-        matrix_size.y = len(matrix)
         for row in matrix:
-            if matrix_size.x == 0:
-                matrix_size.x = len(row)
+            if size.x == 0:
+                size.x = len(row)
             _row = []
             for char in row:
                 _row.append(char)
@@ -88,19 +92,19 @@ class MatrixBorder():
         # apply border
         # swap the corners for corner characters
         _matrix[0][0] = self.top_left
-        _matrix[0][matrix_size.x-1] = self.top_right
-        _matrix[matrix_size.y-1][0] = self.bottom_left
-        _matrix[matrix_size.y-1][matrix_size.x-1] = self.bottom_right
+        _matrix[0][size.x-1] = self.top_right
+        _matrix[size.y-1][0] = self.bottom_left
+        _matrix[size.y-1][size.x-1] = self.bottom_right
 
         # swap top and bottoms with '═' (skipping first and last positions)
-        for i in range(1, matrix_size.x-1):
+        for i in range(1, size.x-1):
             _matrix[0][i] = self.top
-            _matrix[matrix_size.y-1][i] = self.bottom
+            _matrix[size.y-1][i] = self.bottom
 
         # swap left and right sides with '║' (skipping first and last positions)
         # Note: _matrix[1:-1] is the syntax to get all elements but the first and last
         for row in _matrix[1:-1]:
             row[0] = self.left
-            row[matrix_size.x-1] = self.right
+            row[size.x-1] = self.right
 
-        return _matrix
+        return Matrix(_matrix)

@@ -1,6 +1,7 @@
 from game.matrix_border import MatrixBorder
 from game.vector2 import Vector2
 from game.game_object import GameObject
+from game.matrix import Matrix
 
 class Grid(GameObject):
     # The matrix will look something like this, but its size
@@ -14,18 +15,7 @@ class Grid(GameObject):
     def __init__(self):
         self.empty_char = '.' # '°'
         self.position = Vector2(x=5, y=0)
-        _matrix = []
-        
-        ### Logically build the grid matrix ###
-        matrix_size = Vector2(x=13, y=16)
-
-        # fill the matrix with the empty char
-        for i in range(0, matrix_size.y):
-            row = []
-            for j in range(0, matrix_size.x):
-                row.append(self.empty_char)
-            _matrix.append(row)
-
+        matrix = Matrix.empty_sized(rows=16, columns=13, value='.')
         border = MatrixBorder(sides=MatrixBorder.SINGLE_LINE_THIN)
-        _matrix = border.apply_to_matrix(_matrix)
-        super().__init__(matrix=_matrix)
+        matrix = border.apply(matrix)
+        super().__init__(matrix=matrix)

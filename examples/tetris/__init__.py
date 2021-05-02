@@ -1,3 +1,4 @@
+import datetime
 import random
 
 from game import Game
@@ -12,13 +13,13 @@ class TetrisGame(Game):
     def __init__(self):
         super().__init__()
         self.grid = Grid()
+        self.grid.position.x += 2
         self.start_shape_position : Vector2 = None
-        self.shape : Shape = None
-        self.deltatime = None
+        self.deltatime : datetime.timedelta = None
         self.start_shape_position: Vector2 = self.grid.position.clone()
         self.start_shape_position.x += int(self.grid.size.x/2) - 2
         self.start_shape_position.y += 1
-        self.shape = self.get_next_shape()
+        self.shape : Shape = self.get_next_shape()
         self.set_on_keydown(self.on_key_down)
         self.game_loop()
 
@@ -55,7 +56,10 @@ class TetrisGame(Game):
             pass
 
         if key_character == 'w':
-            self.shape.spinClockwise()
+            self.shape.matrix = self.shape.matrix.rotated(clockwize=True)
+            return
+        if key_character == 'e':
+            self.shape.matrix = self.shape.matrix.rotated(clockwize=False)
             return
 
         if key_character == 'a':
