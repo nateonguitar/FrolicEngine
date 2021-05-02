@@ -1,7 +1,38 @@
 from .vector2 import Vector2
 
 class Matrix():
-
+    """
+    `Matrix([<matrix_rows>])` is the easy way to set a Matrix
+    ```
+    Matrix([
+        [1,2],
+        [3,4],
+    ])
+    ```
+    `Matrix()` will produce an empty matrix
+    ```
+    []
+    ```
+    Matrix.empty_sized(rows=2, columns=3) will produce
+    ```
+    [None, None, None],
+    [None, None, None]
+    ```
+    Matrix.empty_sized(rows=3, columns=1, value='X') will produce
+    ```
+    ['X'],
+    ['X'],
+    ['X'],
+    ```
+    You can set the values in a Matrix with the square [] operators
+    ```
+    a = Matrix([[1,2,3]])
+    a[0][1] = 7
+    print(a)
+    > will output
+    > [1,7,3]
+    ```
+    """
     def __init__(self, matrix=[]):
         previous_width = len(matrix[0]) if len(matrix) else 0
         for row in matrix:
