@@ -20,7 +20,7 @@ class Game(ABC):
         self.input_controller.start_watching_key_presses()
         self.printer.clear_screen()
         self.empty_screen()
-        self.current_time = datetime.datetime.now()
+        self.current_time : datetime = datetime.datetime.now()
 
 
     def empty_screen(self):
@@ -28,7 +28,7 @@ class Game(ABC):
 
 
     @abstractmethod
-    def update(self, deltatime):
+    def update(self, deltatime:datetime.timedelta):
         pass
 
 
