@@ -1,3 +1,4 @@
+from game.matrix import Matrix
 import os
 
 
@@ -5,21 +6,20 @@ class ConsolePrinter():
     
     ansi_start = "\033["
     ansi_end = "\033[0m"
-    previous_screen = []
-
 
     def __init__(self):
+
         self.previous_screen = self.get_empty_screen()
+        self.terminal_size = os.get_terminal_size()
 
 
     def get_empty_screen(self):
-        terminal_size = os.get_terminal_size()
-        screen = []
-        for line_number in range(0, terminal_size.lines):
-            line = []
-            for column_number in range(0, terminal_size.columns):
-                line.append(' ')
-            screen.append(line)
+        self.terminal_size = os.get_terminal_size()
+        screen = Matrix.empty_sized(
+            rows=self.terminal_size.lines,
+            columns=self.terminal_size.columns,
+            value=' '
+        )
         return screen
 
 
@@ -34,17 +34,21 @@ class ConsolePrinter():
 
 
     # TODO: colors not working yet
-    def print_character_at(self, x, y, char, color='white', end=''):
+    def print_character_at(self, x: int, y: int, char: str, color: str = 'white', end: str = ''):
         position = f"{y+1};{x+1}H"
         print(f"{self.ansi_start}{position}{char}{self.ansi_end}", end=end)
 
     
-    def draw_screen(self, screen):
+    def draw_screen(self, screen: Matrix):
+        _terminal_size = os.get_terminal_size()
+        if self.terminal_size.columns != _terminal_size.columns or self.terminal_size.lines != _terminal_size.lines:
+            self.terminal_size = _terminal_size
+            self.previous_screen = self.get_empty_screen()
         # Print over the entire screen with what has been stored
         # in our screen representation.
         # Only prints over characters that have changed since the last print.
-        lines = len(screen)
-        columns = len(screen[0])
+        lines = min(len(screen), self.terminal_size.lines)
+        columns = min(len(screen[0]), self.terminal_size.columns)
         for line in range(0, lines):
             for column in range(0, columns):
                 prev_char = self.previous_screen[line][column]
