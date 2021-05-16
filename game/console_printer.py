@@ -41,6 +41,10 @@ class ConsolePrinter():
     
     def draw_screen(self, screen: Screen):
         ConsolePrinter.replaced = 0
+        _terminal_size = os.get_terminal_size()
+        if self.terminal_size.columns != _terminal_size.columns or self.terminal_size.lines != _terminal_size.lines:
+            self.terminal_size = _terminal_size
+            self.previous_screen = self.get_empty_screen()
         # Print over the entire screen with what has been stored
         # in our screen representation.
         # Only prints over characters that have changed since the last print.

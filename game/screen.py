@@ -40,15 +40,16 @@ class Screen():
         """
         current_size = self.size
         diff = Vector2(
-            x = x - current_size.x,
-            y = y - current_size.y
+            x = x + 1 - current_size.x,
+            y = y + 1 - current_size.y
         )
         if diff.y > 0:
-            for i in range(0, diff.y):
-                self._matrix.append([])
+            for i in range(0, diff.y+1):
+                expanded_row = [None for j in range(0, current_size.x)]
+                self._matrix.append(expanded_row)
         if diff.x > 0:
             for row in self._matrix:
-                for _x in range(0, diff.x):
+                for _x in range(0, diff.x+1):
                     row.append(None)
         self._matrix[y][x] = value
 
