@@ -1,17 +1,18 @@
-from abc import ABC, abstractmethod
-from game.matrix import Matrix
 import os
 import threading
 import datetime
+from abc import ABC, abstractmethod
 
-from .input_controller import InputController
-from .console_printer import ConsolePrinter
+
+from game.console_printer import ConsolePrinter
+from game.input_controller import InputController
+from game.screen import Screen
 
 class Game(ABC):
 
     def __init__(self, fps=30):
         self.stopped = False
-        self.screen = Matrix([])
+        self.screen = Screen()
         self.game_loop_speed = 1 / fps
         self.printer = None
         self.input_controller = None

@@ -1,4 +1,5 @@
 import datetime
+from game.console_printer import ConsolePrinter
 import random
 
 from game import Game
@@ -114,7 +115,7 @@ class TetrisGame(Game):
                 x = j + pos.x
                 y = i + pos.y
                 try:
-                    self.screen[y][x] = char
+                    self.screen.set(y=y, x=x, value=char)
                 except IndexError:
                     print("Your terminal window is too small\nPlease resize the window and restart the game")
                     self.end_game()
@@ -134,7 +135,7 @@ class TetrisGame(Game):
                 if should_draw:
                     x = j + offset.x
                     y = i + offset.y
-                    self.screen[y][x] = self.shape.char
+                    self.screen.set(y=y, x=x, value=self.shape.char)
                 # This is for testing purposes, it prints over the empty matrix
                 # spots too
                 # else:
@@ -144,7 +145,8 @@ class TetrisGame(Game):
 
 
     def draw_instructions(self):
-        self.screen[self.grid.position.y + self.grid.size.y][0] = "Press 'w' arrow to spin shape!"
+        y = self.grid.position.y + self.grid.size.y
+        self.screen.set(y=y, x=0, value="Press 'w' arrow to spin shape!")
 
 
     def draw_info(self):
@@ -158,5 +160,6 @@ class TetrisGame(Game):
         if self.deltatime.microseconds:
             fps = str(int(1000000 / self.deltatime.microseconds))
             info.append(f'FPS:            {fps}                    ')
+        info.append(f'Chars redrawn:  {ConsolePrinter.replaced}    ')
         for i in range(0, len(info)):
-            self.screen[i+1][left_offset] = info[i]
+            self.screen.set(y=i+1, x=left_offset, value=info[i])
