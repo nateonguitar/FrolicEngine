@@ -40,7 +40,7 @@ class Matrix():
             if current_width != previous_width:
                 raise Exception('Was given a non-rectangular matrix')
                 previous_width = current_width
-        self.matrix = matrix
+        self.matrix: list = matrix
 
 
     @staticmethod
@@ -85,6 +85,11 @@ class Matrix():
                 _clone[i][j] = self[i][j]
         return _clone
 
+
+    def append(self, to_append):
+        if type(to_append) is not list:
+            raise Exception('Tried to append a non-list variable to a Matrix')
+        self.matrix.append(to_append)
 
     def __str__(self):
         if (len(self.matrix)) == 0:

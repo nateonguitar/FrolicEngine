@@ -1,16 +1,18 @@
-from abc import ABC, abstractmethod
 import os
 import threading
 import datetime
+from abc import ABC, abstractmethod
 
-from .input_controller import InputController
-from .console_printer import ConsolePrinter
+
+from game.console_printer import ConsolePrinter
+from game.input_controller import InputController
+from game.screen import Screen
 
 class Game(ABC):
 
     def __init__(self, fps=30):
         self.stopped = False
-        self.screen = []
+        self.screen = Screen()
         self.game_loop_speed = 1 / fps
         self.printer = None
         self.input_controller = None
@@ -19,11 +21,11 @@ class Game(ABC):
         self.input_controller = InputController(self)
         self.input_controller.start_watching_key_presses()
         self.printer.clear_screen()
-        self.empty_screen()
+        self.clear_set_empty_screen()
         self.current_time : datetime = datetime.datetime.now()
 
 
-    def empty_screen(self):
+    def clear_set_empty_screen(self):
         self.screen = self.printer.get_empty_screen()
 
 
@@ -41,7 +43,7 @@ class Game(ABC):
         # then replace values at certain positions.
         # Then we only do a print cycle once everything is in place.
         self.printer.draw_screen(self.screen)
-        self.empty_screen()
+        self.clear_set_empty_screen()
 
 
     def game_loop(self):

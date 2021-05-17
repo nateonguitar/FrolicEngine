@@ -3,10 +3,10 @@ from examples.tetris import TetrisGame
 
 
 class AvailableGame():
-    def __init__(self, label, game_class, description=''):
-        self.label = label
-        self.description = description
-        self.game_class = game_class
+    def __init__(self, label: str, game_class: Game, description: str = ''):
+        self.label: str = label
+        self.description: str = description
+        self.game_class: Game = game_class
 
 
 
