@@ -4,22 +4,15 @@ from game.matrix import Matrix
 class Screen():
 
     def __init__(self, rows=0, columns=0):
+        # _matrix is intended to only be modified
+        # by this or other instances of the Screen class
         self._matrix = Matrix.empty_sized(rows=rows, columns=columns, value=None)
 
 
     def apply(self, screen):
-        """
-        Copies the given screen's values over this screen's values.
-        Resizes larger as needed.
-        """
         if type(screen) is not Screen:
-            raise Exception('Tried to apply a non-Screen to a Screen')
-        incoming_size = screen.size
-        for i in range(0, incoming_size.y):
-            for j in range(0, incoming_size.x):
-                # will resize the internal matrix if needed inside the set() method
-                value = screen.get(y=i, x=j)
-                self.set(y=i, x=j, value=value)
+            raise Exception('the provided screen was not of type Screen')
+        self._matrix = screen._matrix
 
     
     def get(self, x, y):
