@@ -1,5 +1,5 @@
-from game.matrix import Matrix
-from game.matrix_border import MatrixBorder
+from charpy.matrix import Matrix
+from charpy.matrix_border import MatrixBorder
 
 matrix1 = Matrix.empty_sized(rows=3, columns=4, value='.')
 print(matrix1)
