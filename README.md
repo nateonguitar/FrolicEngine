@@ -8,6 +8,11 @@ pip install charpy
 
 ## Example
 
+To see a full Tetris example see
+`https://github.com/nateonguitar/CharPyTetris`
+
+Copy/paste this to do a simple test
+
 ```python
 import charpy
 from pynput import keyboard
