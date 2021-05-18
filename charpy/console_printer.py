@@ -1,6 +1,6 @@
 import os
 
-from game.screen import Screen
+from charpy.screen import Screen
 
 class ConsolePrinter():
     

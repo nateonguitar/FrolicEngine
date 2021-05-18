@@ -1,4 +1,4 @@
-from game.matrix import Matrix
+from charpy.matrix import Matrix
 
 
 e = Matrix([

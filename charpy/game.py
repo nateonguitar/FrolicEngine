@@ -4,9 +4,9 @@ import datetime
 from abc import ABC, abstractmethod
 
 
-from game.console_printer import ConsolePrinter
-from game.input_controller import InputController
-from game.screen import Screen
+from charpy.console_printer import ConsolePrinter
+from charpy.input_controller import InputController
+from charpy.screen import Screen
 
 class Game(ABC):
 

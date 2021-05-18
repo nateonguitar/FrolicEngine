@@ -1,5 +1,5 @@
 from .vector2 import Vector2
-from game.matrix import Matrix
+from charpy.matrix import Matrix
 
 class GameObject():
 

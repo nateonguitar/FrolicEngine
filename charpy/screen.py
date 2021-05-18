@@ -1,5 +1,5 @@
-from game.vector2 import Vector2
-from game.matrix import Matrix
+from charpy.vector2 import Vector2
+from charpy.matrix import Matrix
 
 class Screen():
 
