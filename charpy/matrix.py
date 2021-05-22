@@ -79,7 +79,7 @@ class Matrix():
 
     def clone(self):
         _size = self.size
-        _clone = Matrix(rows=_size.y, columns=_size.x)
+        _clone = Matrix.empty_sized(rows=_size.y, columns=_size.x)
         for i in range(0, _size.y):
             for j in range(0, _size.x):
                 _clone[i][j] = self[i][j]
