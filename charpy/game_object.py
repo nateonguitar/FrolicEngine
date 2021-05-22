@@ -20,7 +20,7 @@ class GameObject():
     @matrix.setter
     def matrix(self, value):
         if type(value) is not Matrix:
-            raise Exception('A GameObject\'s matrix must be of type Matrix')
+            raise Exception("A GameObject's matrix must be of type Matrix")
         self._matrix = value
 
 
