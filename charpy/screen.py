@@ -18,6 +18,8 @@ class Screen():
             row = matrix[i]
             for j in range(0, len(row)):
                 char = row[j]
+                if char == None:
+                    continue
                 x = j + int(position.x)
                 y = i + int(position.y)
                 self.set(y=y, x=x, value=char)
