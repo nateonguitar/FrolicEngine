@@ -62,15 +62,7 @@ class TestGame(charpy.Game):
         pass
 
     def draw(self):
-        pos = self.player.position
-        for i in range(0, len(self.player.matrix)):
-            row = self.player.matrix[i]
-            for j in range(0, len(row)):
-                char = row[j]
-                x = j + pos.x
-                y = i + pos.y
-                # Here you have access to a Screen object
-                self.screen.set(y=y, x=x, value=char)
+        self.screen.draw_matrix(self.player.matrix, self.player.position)
         super().draw()
 
 # create the game and it should start automatically
