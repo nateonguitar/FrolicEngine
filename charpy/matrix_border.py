@@ -1,6 +1,3 @@
-from .matrix import Matrix
-from .vector2 import Vector2
-
 class MatrixBorder():
     """
     ```
@@ -61,50 +58,3 @@ class MatrixBorder():
         for side in sides:
             if type(side) is not str or len(side) != 1:
                 raise Exception('Sides must be a single character each')
-
-
-    def apply(self, matrix: Matrix) -> Matrix:
-        """
-        Does not modify the given matrix,
-        returns a new Matrix with the outer sides
-        replaced with the defined border characters
-        ```
-              °°°°°        ╔═══╗
-              °°°°°        ║°°°║
-        input °°A°° output ║°A°║
-              °°°°°        ║°°°║
-              °°°°°        ╚═══╝
-        ```
-        """
-        size = matrix.size
-
-        # copy the matrix into a new matrix
-        # also detect the matrix size for later use
-        _matrix = []
-        for row in matrix:
-            if size.x == 0:
-                size.x = len(row)
-            _row = []
-            for char in row:
-                _row.append(char)
-            _matrix.append(_row)
-
-        # apply border
-        # swap the corners for corner characters
-        _matrix[0][0] = self.top_left
-        _matrix[0][size.x-1] = self.top_right
-        _matrix[size.y-1][0] = self.bottom_left
-        _matrix[size.y-1][size.x-1] = self.bottom_right
-
-        # swap top and bottoms with '═' (skipping first and last positions)
-        for i in range(1, size.x-1):
-            _matrix[0][i] = self.top
-            _matrix[size.y-1][i] = self.bottom
-
-        # swap left and right sides with '║' (skipping first and last positions)
-        # Note: _matrix[1:-1] is the syntax to get all elements but the first and last
-        for row in _matrix[1:-1]:
-            row[0] = self.left
-            row[size.x-1] = self.right
-
-        return Matrix(_matrix)

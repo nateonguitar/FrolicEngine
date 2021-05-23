@@ -1,3 +1,4 @@
+from charpy.matrix_border import MatrixBorder
 from .vector2 import Vector2
 
 class Matrix():
@@ -90,6 +91,49 @@ class Matrix():
         if type(to_append) is not list:
             raise Exception('Tried to append a non-list variable to a Matrix')
         self.matrix.append(to_append)
+
+
+    def with_border(self, border: MatrixBorder):
+        """
+        Returns a copy of the matrix with the given border applied to it.
+        ```
+               °°°°°       ╔═══╗
+               °°°°°       ║°°°║
+        before °°A°° after ║°A°║
+               °°°°°       ║°°°║
+               °°°°°       ╚═══╝
+        ```
+        """
+        size = self.size
+        _matrix = []
+        for row in self.matrix:
+            if size.x == 0:
+                size.x = len(row)
+            _row = []
+            for char in row:
+                _row.append(char)
+            _matrix.append(_row)
+
+        # apply border
+        # swap the corners for corner characters
+        _matrix[0][0] = border.top_left
+        _matrix[0][size.x-1] = border.top_right
+        _matrix[size.y-1][0] = border.bottom_left
+        _matrix[size.y-1][size.x-1] = border.bottom_right
+
+        # swap top and bottoms with '═' (skipping first and last positions)
+        for i in range(1, size.x-1):
+            _matrix[0][i] = border.top
+            _matrix[size.y-1][i] = border.bottom
+
+        # swap left and right sides with '║' (skipping first and last positions)
+        # Note: _matrix[1:-1] is the syntax to get all elements but the first and last
+        for row in _matrix[1:-1]:
+            row[0] = border.left
+            row[size.x-1] = border.right
+
+        return Matrix(_matrix)
+
 
     def __str__(self):
         if (len(self.matrix)) == 0:
