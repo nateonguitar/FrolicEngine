@@ -9,7 +9,6 @@ e = Matrix([
 
 e_rotated = e.rotated()
 print(e_rotated)
-quit()
 
 a = Matrix([
     [1, 2, 3],
