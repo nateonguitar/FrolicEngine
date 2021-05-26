@@ -83,10 +83,21 @@ class TestGame(Game):
 
         # Matrix also has a convenient way of making a simple matrix by using Matrix.empty_sized():
         #     the following produces:
-        #         ['▢', '▢']
-        #         ['▢', '▢']
-        #         ['▢', '▢']
-        matrix = Matrix.empty_sized(rows=3, columns=2, value='▢')
+        #         ['X', 'X']
+        #         ['X', 'X']
+        #         ['X', 'X']
+        matrix2 = Matrix.empty_sized(rows=3, columns=2, value='▢')
+
+        # Note: Matrices are anchored at the top left corner,
+        #       so drawing matrix2 at position Vector2(x=1, y=1)
+        #       will produce this screen:
+        self.screen.draw_matrix(matrix2, Vector2(x=1, y=1))
+        # [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        # [' ', 'X', 'X', ' ', ' ', ' ', ' ']
+        # [' ', 'X', 'X', ' ', ' ', ' ', ' ']
+        # [' ', 'X', 'X', ' ', ' ', ' ', ' ']
+        # [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        # [' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
         # call super and the Game will handle applying this frame's "screen" to the console window
         super().draw()
@@ -106,6 +117,10 @@ class Player(GameObject):
         self.matrix = Matrix.empty_sized(rows=3, columns=2, value='0')
         # self.size is a Vector2 getter representing the size of the current matrix,
         # so in this example self.size.x == 2 because self.matrix has 2 columns
+    def moveLeft():
+        self.position.x -= 1
+    def moveRight():
+        self.position.x += 1
 
 class TestGame(Game):
     def __init__(self):
@@ -126,11 +141,11 @@ class TestGame(Game):
             pass
         if key_character == 'a':
             if self.player.position.x > 0:
-                self.player.position.x -= 1
+                self.player.moveLeft()
             return
         if key_character == 'd':
             if self.player.position.x < 10:
-                self.player.position.x += 1
+                self.player.moveRight()
             return
 
     def draw(self):
@@ -150,7 +165,7 @@ input   °°A°° output ║°A°║
         °°°°°        ╚═══╝
 ```
 
-Borders other than the provided lines can also be used:
+Borders other than the provided side-characters can also be used:
 
 ```
 border = MatrixBorder(sides={
