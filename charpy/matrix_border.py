@@ -56,5 +56,7 @@ class MatrixBorder():
             self.bottom_right,
         )
         for side in sides:
+            if side == None:
+                continue
             if type(side) is not str or len(side) != 1:
                 raise Exception('Sides must be a single character each')
