@@ -1,39 +1,137 @@
-# Python Text Game Engine
-
-### Install
+# Installation
 
 ```
 pip install charpy
 ```
 
-## Example
+# Creating a basic game
 
-To see a full Tetris example see
-`https://github.com/nateonguitar/CharPyTetris`
-
-Copy/paste this to do a simple test
-
+Create a class that inherits from `Game`, provide an `__init__()` and call `super().__init__()`.
+Overriding `update()` and `draw()` are required.
 ```python
-import charpy
-from pynput import keyboard
+import datetime
+from charpy import Game
 
-class Player(charpy.GameObject):
-    def __init__(self):
-        self.position = charpy.Vector2(x=5, y=0)
-        matrix = charpy.Matrix.empty_sized(rows=3, columns=2, value='0')
-        super().__init__(matrix=matrix)
-
-class TestGame(charpy.Game):
+class TestGame(Game):
     def __init__(self):
         super().__init__()
-        self.player = Player()
+
+    def update(self, deltatime: datetime.timedelta):
+        # deltatime is the time since the previous update call
+        # deltatime.total_seconds() is a floating point
+        pass
+
+    def draw(self)
+        # must call super
+        super().draw()
+```
+
+
+Launch the game by calling the game's `game_loop()` function.
+This example so far will just produce an empty screen.
+```python
+from charpy import Game
+
+class TestGame(Game):
+    . . .
+
+game = TestGame()
+game.game_loop()
+```
+
+
+Handling inputs.
+Notice the `keyboard` import.
+```python
+from charpy import Game
+from pynput import keyboard
+
+class TestGame(Game):
+    def __init__(self):
+        super().__init__()
         self.set_on_keydown(self.on_key_down)
-        self.game_loop()
 
     def on_key_down(self, key: keyboard.Key):
         # on escape kill the game
         if key == keyboard.Key.esc:
-            # end_game() is from charpy.Game
+            # end_game() is inherited from charpy.Game
+            self.end_game()
+            return
+```
+
+To draw characters/symbols to the screen override the `draw()` function.
+`self.screen` is a `Screen` object that represents the current frame.
+Set values on the screen to have them show up in the console.
+
+```python
+from charpy import Game, Matrix, Vector2
+class TestGame(Game):
+    . . .
+
+    def draw(self):
+        # call screen.set() to put a character at a given x, y coordinate
+        self.screen.set(x=0, y=0, '#')
+
+        # draw a matrix at a given position by calling screen.draw_matrix()
+        position = Vector2(3, 3)
+        matrix = Matrix([
+            ['#', '#', '#'],
+            ['#', '0', '#'],
+            ['#', '#', '#'],
+        ])
+        self.screen.draw_matrix(matrix, position)
+
+        # Matrix also has a convenient way of making a simple matrix by using Matrix.empty_sized():
+        #     the following produces:
+        #         ['X', 'X']
+        #         ['X', 'X']
+        #         ['X', 'X']
+        matrix2 = Matrix.empty_sized(rows=3, columns=2, value='▢')
+
+        # Note: Matrices are anchored at the top left corner,
+        #       so drawing matrix2 at position Vector2(x=1, y=1)
+        #       will produce this screen:
+        self.screen.draw_matrix(matrix2, Vector2(x=1, y=1))
+        # [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        # [' ', 'X', 'X', ' ', ' ', ' ', ' ']
+        # [' ', 'X', 'X', ' ', ' ', ' ', ' ']
+        # [' ', 'X', 'X', ' ', ' ', ' ', ' ']
+        # [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        # [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+
+        # call super and the Game will handle applying this frame's "screen" to the console window
+        super().draw()
+```
+
+
+Instances of `GameObject` are a convenience class to represent objects in the game.
+They have a `matrix` that is of type `Matrix` and a `position` that is of type `Vector2`.
+```python
+from charpy import Game, GameObject, Matrix, Vector2
+from pynput import keyboard
+
+class Player(GameObject):
+    def __init__(self):
+        super().__init__()
+        self.position = Vector2(x=5, y=0)
+        self.matrix = Matrix.empty_sized(rows=3, columns=2, value='0')
+        # self.size is a Vector2 getter representing the size of the current matrix,
+        # so in this example self.size.x == 2 because self.matrix has 2 columns
+    def moveLeft():
+        self.position.x -= 1
+    def moveRight():
+        self.position.x += 1
+
+class TestGame(Game):
+    def __init__(self):
+        super().__init__()
+        self.player = Player()
+        self.set_on_keydown(self.on_key_down)
+
+    . . .
+
+    def on_key_down(self, key: keyboard.Key):
+        if key == keyboard.Key.esc:
             self.end_game()
             return
         key_character = None
@@ -43,36 +141,96 @@ class TestGame(charpy.Game):
             pass
         if key_character == 'a':
             if self.player.position.x > 0:
-                self.player.position.x -= 1
+                self.player.moveLeft()
             return
         if key_character == 'd':
             if self.player.position.x < 10:
-                self.player.position.x += 1
+                self.player.moveRight()
             return
-        if key_character == 'w':
-            if self.player.position.y > 0:
-                self.player.position.y -= 1
-            return
-        if key_character == 's':
-            if self.player.position.y < 5:
-                self.player.position.y += 1
-            return
-
-    def update(self, deltatime: float):
-        pass
 
     def draw(self):
-        pos = self.player.position
-        for i in range(0, len(self.player.matrix)):
-            row = self.player.matrix[i]
-            for j in range(0, len(row)):
-                char = row[j]
-                x = j + pos.x
-                y = i + pos.y
-                # Here you have access to a Screen object
-                self.screen.set(y=y, x=x, value=char)
+        self.screen.draw_matrix(self.player.matrix, self.player.position)
         super().draw()
+```
 
-# create the game and it should start automatically
-game = TestGame()
+
+Another convenience is the `MatrixBorder` class, it creates a copy of the given matrix with a border on it.
+`MatrixBorder` has a default border of `SINGLE_LINE_THIN` but also has `SINGLE_LINE_THICK` and `DOUBLE_LINE`
+```
+border = MatrixBorder(sides=MatrixBorder.DOUBLE_LINE)
+        °°°°°        ╔═══╗
+        °°°°°        ║°°°║
+input   °°A°° output ║°A°║
+        °°°°°        ║°°°║
+        °°°°°        ╚═══╝
+```
+
+Borders other than the provided side-characters can also be used:
+
+```
+border = MatrixBorder(sides={
+    'top': 'X',
+    'top_left': 'X',
+    'top_right': 'X',
+    'left': 'X',
+    'right': 'X',
+    'bottom': 'X',
+    'bottom_left': 'X',
+    'bottom_right': 'X',
+})
+        °°°°°        XXXXX
+        °°°°°        X°°°X
+input   °°A°° output X°A°X
+        °°°°°        X°°°X
+        °°°°°        XXXXX
+```
+
+```python
+class Card(GameObject):
+    def __init__(self):
+        super().__init__()
+        self.position = Vector2(x=2, y=1)
+        _matrix = Matrix.empty_sized(rows=6, columns=6, value=' ')
+        _matrix[1][1] = '2'
+        # ♤ ♡ ♧ ♢
+        _matrix[2][1] = '♤'
+        border = MatrixBorder() # default to single thin line
+        self.matrix = _matrix.with_border(border)
+```
+
+# Examples
+
+A simple example to copy/paste: [example_game.py](example_game.py)
+
+A more fleshed out full Tetris example:
+[CharPyTetris](https://github.com/nateonguitar/CharPyTetris)
+
+# Developing CharPy
+
+Clone this project
+```
+git clone <url for this project>
+```
+
+Create a virtual environment [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) and activate it
+```
+# windows:
+.\venv\Scripts\activate
+
+# linux:
+./venv/bin/activate
+```
+
+
+Install this package into venv
+```
+pip install .
+```
+
+Start developing by modifying the `example_game.py` or create some tests.
+Remember that this README's examples very closely follow `example_game.py` so changes there should reflect here in this README.
+```
+python example_game.py
+python tests/border.py
+python tests/matrix.py
 ```

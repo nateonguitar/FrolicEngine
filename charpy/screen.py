@@ -9,6 +9,22 @@ class Screen():
         self._matrix = Matrix.empty_sized(rows=rows, columns=columns, value=None)
 
 
+    def draw_matrix(self, matrix: Matrix, position: Vector2):
+        if type(matrix) is not Matrix:
+            raise Exception('screen.draw_matrix(matrix, position) matrix must be of type Matrix')
+        if type(position) is not Vector2:
+            raise Exception('screen.draw_matrix(matrix, position) position must be of type Vector2')
+        for i in range(0, len(matrix)):
+            row = matrix[i]
+            for j in range(0, len(row)):
+                char = row[j]
+                if char == None:
+                    continue
+                x = j + int(position.x)
+                y = i + int(position.y)
+                self.set(y=y, x=x, value=char)
+
+
     def apply(self, screen):
         if type(screen) is not Screen:
             raise Exception('the provided screen was not of type Screen')
