@@ -8,19 +8,19 @@ from charpy.screen import Screen
 
 class Game(ABC):
 
-    def __init__(self, fps=30):
+    def __init__(self, fps=60):
+        self.target_fps = fps
         self.stopped = False
+        self.show_debug_info = False
         self.debug_size = {
             'key': 0,
             'value': 0,
         }
         self.debug_info = {
-            'fps': 0,
-            'chars_replaced': 0,
+            'FPS': 0,
+            'Chars Replaced': 0,
         }
         self.screen = Screen()
-        self.show_debug_info = False
-        self.game_loop_speed = 1 / fps
         self.printer = None
         self.input_controller = None
         self.timer_thread = None
@@ -86,18 +86,21 @@ class Game(ABC):
 
         if self.stopped:
             return
+
         # wait some time on a separate thread then run game_loop again
         # this avoids using a spin-lock
-        self.timer_thread = threading.Timer(self.game_loop_speed, self.game_loop)
+        next_frame_wait = 1 / self.target_fps
+        next_frame_wait *= 2/3
+        self.timer_thread = threading.Timer(next_frame_wait, self.game_loop)
         self.timer_thread.start()
 
 
     def calculate_debug(self, deltatime):
         if deltatime.microseconds == 0:
-            self.debug_info['fps'] = None
+            self.debug_info['FPS'] = None
         else:
-            self.debug_info['fps'] = str(int(1000000 / deltatime.microseconds))
-        self.debug_info['chars_replaced'] = ConsolePrinter.replaced
+            self.debug_info['FPS'] = str(int(1000000 / deltatime.microseconds))
+        self.debug_info['Chars Replaced'] = ConsolePrinter.replaced
 
 
     def end_game(self):

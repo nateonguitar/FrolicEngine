@@ -58,9 +58,6 @@ class TestGame(Game):
             if self.player.position.y < 6:
                 self.player.position.y += 1
             return
-        if key_character == 'x':
-            self.debug_info['random_number'] = random.randint(0, 1200)
-            return
 
     def update(self, deltatime: datetime.timedelta):
         pass
