@@ -1,8 +1,6 @@
-import os
-import threading
-import datetime
 from abc import ABC, abstractmethod
-
+import datetime
+import threading
 
 from charpy.console_printer import ConsolePrinter
 from charpy.input_controller import InputController
@@ -92,7 +90,6 @@ class Game(ABC):
         # this avoids using a spin-lock
         self.timer_thread = threading.Timer(self.game_loop_speed, self.game_loop)
         self.timer_thread.start()
-
 
 
     def calculate_debug(self, deltatime):
