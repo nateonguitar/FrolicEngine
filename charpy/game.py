@@ -56,7 +56,7 @@ class Game(ABC):
                 key_width = len(str(key))
                 if key_width > self.debug_size['key']:
                     self.debug_size['key'] = key_width
-                val_width = len(str(value))
+                val_width = len(str(value)) if value is not None else 0
                 if val_width > self.debug_size['value']:
                     self.debug_size['value'] = val_width
             # + 2 for the colon + space we will use

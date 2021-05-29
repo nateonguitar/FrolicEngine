@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from charpy import Game, GameObject, Matrix, MatrixBorder, Vector2
 from pynput import keyboard
@@ -56,6 +57,9 @@ class TestGame(Game):
         if key_character == 's':
             if self.player.position.y < 6:
                 self.player.position.y += 1
+            return
+        if key_character == 'x':
+            self.debug_info['random_number'] = random.randint(0, 1200)
             return
 
     def update(self, deltatime: datetime.timedelta):
