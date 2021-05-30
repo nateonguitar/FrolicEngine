@@ -34,6 +34,16 @@ class MatrixBorder():
         'bottom_left': '╚',
         'bottom_right': '╝',
     }
+    STARS = {
+        'top': '*',
+        'top_left': '*',
+        'top_right': '*',
+        'left': '*',
+        'right': '*',
+        'bottom': '*',
+        'bottom_left': '*',
+        'bottom_right': '*',
+    }
 
 
     def __init__(self, sides=SINGLE_LINE_THIN):

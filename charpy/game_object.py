@@ -8,7 +8,6 @@ class GameObject():
         self._matrix: Matrix = None
         # set the real thing
         self.matrix = kwargs.get('matrix', Matrix())
-
         self.position = Vector2(x=0, y=0)
 
 

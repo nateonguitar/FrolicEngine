@@ -1,16 +1,16 @@
 from io import open
 from setuptools import setup
-import sys
 
+long_description = ''
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='charpy',
-    version='0.1.0',
+    version='1.0.0',
     license='MIT',
-    url='https://github.com/shuds13/pyexample',
-    description='A game engine that lets you write text/ansii based games, targets 30fps.',
+    url='https://github.com/nateonguitar/CharPy',
+    description='A game engine that lets you write text/ansii based games, targets 60fps.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Nate Brooks',
@@ -28,5 +28,5 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    keywords='game engine text based charpy',
+    keywords='game games engine text based charpy',
 )
