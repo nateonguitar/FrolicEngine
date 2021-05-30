@@ -90,7 +90,6 @@ class Game(ABC):
         # wait some time on a separate thread then run game_loop again
         # this avoids using a spin-lock
         next_frame_wait = 1 / self.target_fps
-        next_frame_wait *= 2/3
         self.timer_thread = threading.Timer(next_frame_wait, self.game_loop)
         self.timer_thread.start()
 
@@ -113,6 +112,6 @@ class Game(ABC):
     def set_on_keydown(self, func):
         self.input_controller.set_on_keydown(func)
 
-    
+
     def set_on_keyup(self, func):
         self.input_controller.set_on_keyup(func)

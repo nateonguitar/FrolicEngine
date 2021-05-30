@@ -9,7 +9,6 @@ class ConsolePrinter():
     ansi_end = "\033[0m"
 
     def __init__(self):
-
         self.previous_screen = self.get_empty_screen()
         self.terminal_size = os.get_terminal_size()
 
