@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from charpy import Game, GameObject, Matrix, MatrixBorder, Vector2
 from pynput import keyboard
@@ -28,6 +29,7 @@ class TestGame(Game):
         self.player = Player()
         self.card = Card()
         self.set_on_keydown(self.on_key_down)
+        self.show_debug_info = True
 
     def on_key_down(self, key: keyboard.Key):
         # on escape kill the game
