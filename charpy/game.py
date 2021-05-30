@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import datetime
 import threading
+import time
+
 
 from charpy.console_printer import ConsolePrinter
 from charpy.input_controller import InputController
@@ -31,8 +33,8 @@ class Game(ABC):
         self.input_controller.start_watching_key_presses()
         self.printer.clear_screen()
         self.clear_set_empty_screen()
-        self.current_time : datetime = datetime.datetime.now()
         Game.instance = self
+        self.last_loop_start_time : datetime = datetime.datetime.now()
 
 
     def clear_set_empty_screen(self):
@@ -78,30 +80,44 @@ class Game(ABC):
         self.clear_set_empty_screen()
 
 
+
     def game_loop(self):
-        new_time = datetime.datetime.now()
-        deltatime = new_time - self.current_time
-        self.current_time = new_time
-        if self.show_debug_info:
-            self.calculate_debug(deltatime)
-        self.update(deltatime)
-        self.draw()
+        while True:
+            loop_start_time = datetime.datetime.now()
+            calc_time = loop_start_time - self.last_loop_start_time
+            self.last_loop_start_time = loop_start_time
 
-        if self.stopped:
-            return
+            if self.show_debug_info:
+                self.calculate_debug(calc_time)
 
-        # wait some time on a separate thread then run game_loop again
-        # this avoids using a spin-lock
-        next_frame_wait = 1 / self.target_fps
-        self.timer_thread = threading.Timer(next_frame_wait, self.game_loop)
-        self.timer_thread.start()
+            self.update(calc_time)
+            self.draw()
+
+            if self.stopped:
+                return
+
+    #     # wait some time on a separate thread then run game_loop again
+    #     # this avoids using a spin-lock
+
+            # time.time
+            frame_wait_timming = datetime.timedelta(microseconds=(1000 * 1000 / self.target_fps))
+
+
+            loop_time_after_calc = datetime.datetime.now()
+            calc_time = loop_time_after_calc - loop_start_time
+            real_wait_time = frame_wait_timming - calc_time
+            # print(f"will wait for: {real_wait_time.microseconds / 1000 / 1000}")
+            time.sleep(real_wait_time.microseconds / 1000 / 1000)
+
+    #     self.timer_thread = threading.Timer(next_frame_wait, self.game_loop)
+    #     self.timer_thread.start()
 
 
     def calculate_debug(self, deltatime):
         if deltatime.microseconds == 0:
             self.debug_info['FPS'] = None
         else:
-            self.debug_info['FPS'] = str(int(1000000 / deltatime.microseconds))
+            self.debug_info['FPS'] = str(round(1000000 / deltatime.microseconds, 2))
         self.debug_info['Chars Replaced'] = ConsolePrinter.replaced
 
 

@@ -1,6 +1,7 @@
 **/__pycache__/**
 .vscode/
 venv/
+.venv/
 build/
 charpy.egg-info
 dist/*
