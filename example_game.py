@@ -1,5 +1,4 @@
 import datetime
-import random
 
 from charpy import Game, GameObject, Matrix, MatrixBorder, Vector2
 from pynput import keyboard
@@ -23,7 +22,7 @@ class Card(GameObject):
         self.matrix = _matrix.with_border(border)
 
 
-class TestGame(Game):
+class ExampleGame(Game):
     def __init__(self):
         super().__init__()
         self.player = Player()
@@ -31,35 +30,38 @@ class TestGame(Game):
         self.set_on_keydown(self.on_key_down)
         self.show_debug_info = True
 
+
     def on_key_down(self, key: keyboard.Key):
-        # on escape kill the game
-        if key == keyboard.Key.esc:
-            # end_game() is from charpy.Game
-            self.end_game()
-            return
-        key_character = None
-        try:
-            key_character = key.char
-        except:
-            pass
-        if key_character == 'a':
-            if self.player.position.x > 0:
-                self.player.position.x -= 1
-            return
-        if key_character == 'd':
-            if self.player.position.x < 8:
-                self.player.position.x += 1
-            return
-        if key_character == 'w':
-            if self.player.position.y > 0:
-                self.player.position.y -= 1
-            return
-        if key_character == 's':
-            if self.player.position.y < 6:
-                self.player.position.y += 1
-            return
+        character_key = hasattr(key, 'char')
+        if character_key:
+            if key.char == 'a':
+                if self.player.position.x > 0:
+                    self.player.position.x -= 1
+                return
+            if key.char == 'd':
+                if self.player.position.x < 8:
+                    self.player.position.x += 1
+                return
+            if key.char == 'w':
+                if self.player.position.y > 0:
+                    self.player.position.y -= 1
+                return
+            if key.char == 's':
+                if self.player.position.y < 6:
+                    self.player.position.y += 1
+                return
+
+        # non character keys, like Shift or Ctrl
+        else:
+            # on escape kill the game
+            if key == keyboard.Key.esc:
+                # end_game() is from charpy.Game
+                self.end_game()
+                return
+
 
     def update(self, deltatime: datetime.timedelta):
+        # deltatime.total_seconds() is a float
         pass
 
     def draw(self):
@@ -68,5 +70,5 @@ class TestGame(Game):
         super().draw()
 
 # create the game and it should start automatically
-game = TestGame()
+game = ExampleGame()
 game.game_loop()

@@ -52,11 +52,19 @@ class TestGame(Game):
         self.set_on_keydown(self.on_key_down)
 
     def on_key_down(self, key: keyboard.Key):
-        # on escape kill the game
-        if key == keyboard.Key.esc:
-            # end_game() is inherited from charpy.Game
-            self.end_game()
-            return
+        character_key = hasattr(key, 'char')
+
+        # will show how to use character keys later
+        if character_key:
+            pass
+
+        # non character keys, like Shift or Ctrl
+        else:
+            # on escape kill the game
+            if key == keyboard.Key.esc:
+                # end_game() is inherited from charpy.Game
+                self.end_game()
+                return
 ```
 
 To draw characters/symbols to the screen override the `draw()` function.
@@ -131,22 +139,20 @@ class TestGame(Game):
     . . .
 
     def on_key_down(self, key: keyboard.Key):
-        if key == keyboard.Key.esc:
-            self.end_game()
-            return
-        key_character = None
-        try:
-            key_character = key.char
-        except:
-            pass
-        if key_character == 'a':
-            if self.player.position.x > 0:
-                self.player.moveLeft()
-            return
-        if key_character == 'd':
-            if self.player.position.x < 10:
-                self.player.moveRight()
-            return
+        character_key = hasattr(key, 'char')
+        if character_key:
+            if key.char == 'a':
+                if self.player.position.x > 0:
+                    self.player.moveLeft()
+                return
+            if key.char == 'd':
+                if self.player.position.x < 10:
+                    self.player.moveRight()
+                return
+        else:
+            if key == keyboard.Key.esc:
+                self.end_game()
+                return
 
     def draw(self):
         self.screen.draw_matrix(self.player.matrix, self.player.position)
