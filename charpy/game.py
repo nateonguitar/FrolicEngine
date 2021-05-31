@@ -7,6 +7,8 @@ from charpy.input_controller import InputController
 from charpy.screen import Screen
 
 class Game(ABC):
+    # convenient reference to the Game object
+    instance = None
 
     def __init__(self, fps=60):
         self.target_fps = fps
@@ -30,6 +32,7 @@ class Game(ABC):
         self.printer.clear_screen()
         self.clear_set_empty_screen()
         self.current_time : datetime = datetime.datetime.now()
+        Game.instance = self
 
 
     def clear_set_empty_screen(self):

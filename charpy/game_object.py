@@ -1,5 +1,6 @@
-from .vector2 import Vector2
+from charpy.game import Game
 from charpy.matrix import Matrix
+from charpy.vector2 import Vector2
 
 class GameObject():
 
@@ -9,6 +10,11 @@ class GameObject():
         # set the real thing
         self.matrix = kwargs.get('matrix', Matrix())
         self.position = Vector2(x=0, y=0)
+
+
+    @property
+    def game_instance(self):
+        return Game.instance
 
 
     @property
