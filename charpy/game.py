@@ -86,9 +86,9 @@ class Game(ABC):
         self.printer.draw_screen(self.screen)
         self.clear_set_empty_screen()
 
-    def start_game(self):
+    def run(self):
         """
-        Called to start a game loop
+        Called to start the game loop
         """
         # First Loop Setup
         self.last_loop_start_time = time.time() - 1 / self.fps_target  # Set the last loop_start time, expected value

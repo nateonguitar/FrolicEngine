@@ -61,7 +61,7 @@ class ExampleGame(Game):
                 self.end_game()
                 return
 
-    def update(self, deltatime: datetime.timedelta):
+    def update(self, deltatime: float):
         # deltatime.total_seconds() is a float
         pass
 
@@ -73,4 +73,4 @@ class ExampleGame(Game):
 
 # create the game and it should start automatically
 game = ExampleGame()
-game.start_game()
+game.run()
