@@ -27,7 +27,7 @@ class TestGame(Game):
 ```
 
 
-Launch the game by calling the game's `game_loop()` function.
+Launch the game by calling the game's `run()` function.
 This example so far will just produce an empty screen.
 ```python
 from charpy import Game
@@ -36,7 +36,7 @@ class TestGame(Game):
     . . .
 
 game = TestGame()
-game.game_loop()
+game.run()
 ```
 
 
