@@ -71,4 +71,4 @@ class ExampleGame(Game):
 
 # create the game and it should start automatically
 game = ExampleGame()
-game.game_loop()
+game.start_game()
