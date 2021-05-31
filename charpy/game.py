@@ -20,10 +20,6 @@ class Game(ABC):
         Game.instance = self
         self.stopped = False
         self.show_debug_info = False
-        self.debug_size = {
-            "key": 0,
-            "value": 0,
-        }
         self.debug_info = {
             "FPS": 0,
             "FPS Target": 0,
@@ -63,22 +59,27 @@ class Game(ABC):
         # Then we only do a print cycle once everything is in place.
 
         if self.show_debug_info:
+            
+            debug_size = {
+                "key": 0,
+                "value": 0,
+            }
             for key in self.debug_info:
                 value = self.debug_info[key]
                 key_width = len(str(key))
-                if key_width > self.debug_size["key"]:
-                    self.debug_size["key"] = key_width
+                if key_width > debug_size["key"]:
+                    debug_size["key"] = key_width
                 val_width = len(str(value)) if value is not None else 0
-                if val_width > self.debug_size["value"]:
-                    self.debug_size["value"] = val_width
+                if val_width > debug_size["value"]:
+                    debug_size["value"] = val_width
             # + 2 for the colon + space we will use
-            key_value_width = self.debug_size["key"] + self.debug_size["value"] + 2
+            key_value_width = debug_size["key"] + debug_size["value"] + 2
             i = 0
             screen_width = self.printer.terminal_size.columns
             for key in self.debug_info:
                 value = self.debug_info[key]
-                _key = str(key).rjust(self.debug_size["key"])
-                _value = str(value if value is not None else " ").ljust(self.debug_size["value"])
+                _key = str(key).rjust(debug_size["key"])
+                _value = str(value if value is not None else " ").ljust(debug_size["value"])
                 key_value = f"{_key}: {_value}"
                 self.screen.set(screen_width - key_value_width, i, key_value)
                 i += 1
