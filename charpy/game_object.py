@@ -31,6 +31,9 @@ class GameObject():
 
     @property
     def size(self) -> Vector2:
+        """
+        Computes and returns a Vector2 that holds the current size of self.matrix
+        """
         try:
             x = 0
             y = len(self.matrix)
