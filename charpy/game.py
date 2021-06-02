@@ -1,18 +1,15 @@
 from abc import ABC, abstractmethod
-import datetime
-import time
-
 
 from charpy.console_printer import ConsolePrinter
 from charpy.input_controller import InputController
 from charpy.screen import Screen
 
+from .utils import clamp, safe_sleep, timestamp
+
+
 class Game(ABC):
     # Convenient reference to the Game object
     instance = None
-
-def clamp(value, lower, upper):
-    return lower if value < lower else upper if value > upper else value
 
 
 class Game(ABC):
@@ -40,13 +37,13 @@ class Game(ABC):
         self.fps_avg: float = self.fps_target
         self.fps_samples: int = self.fps_target * 2
         self.time_adjustment: float = 0
-        self.last_loop_start_time: float = time.time() - 1 / self.fps_target
+        self.last_loop_start_time: float = timestamp() - 1 / self.fps_target
 
     def clear_set_empty_screen(self):
         self.screen = self.printer.get_empty_screen()
 
     @abstractmethod
-    def update(self, deltatime: datetime.timedelta):
+    def update(self, deltatime: float):
         pass
 
     @abstractmethod
@@ -59,7 +56,7 @@ class Game(ABC):
         # Then we only do a print cycle once everything is in place.
 
         if self.show_debug_info:
-            
+
             debug_size = {
                 "key": 0,
                 "value": 0,
@@ -92,13 +89,13 @@ class Game(ABC):
         Called to start the game loop
         """
         # First Loop Setup
-        self.last_loop_start_time = time.time() - 1 / self.fps_target  # Set the last loop_start time, expected value
+        self.last_loop_start_time = timestamp() - 1 / self.fps_target  # Set the last loop_start time, expected value
 
         # Loop forever
         while True:
 
             # Record loop time data
-            loop_start_time = time.time()
+            loop_start_time = timestamp()
             loop_delta_time = loop_start_time - self.last_loop_start_time
             self.last_loop_start_time = loop_start_time
 
@@ -116,23 +113,25 @@ class Game(ABC):
             self.fps_avg = (avg * samples + (1.0 / loop_delta_time)) / (samples + 1)
 
             # Time after game_loop is end
-            loop_end_time = time.time()
+            loop_end_time = timestamp()
 
             frame_time = 1.0 / self.fps_target  # How long a frame should take
             loop_used = loop_end_time - loop_start_time  # How much time the current loop took.
 
             if self.fps_target > self.fps_avg:
-                self.time_adjustment = self.time_adjustment + 0.000001
+                self.time_adjustment = self.time_adjustment + 0.00001
             if self.fps_target + 0.1 < self.fps_avg:
-                self.time_adjustment = self.time_adjustment - 0.000001
-            self.time_adjustment = clamp(self.time_adjustment, -0.01, 0.01)
+                self.time_adjustment = self.time_adjustment - 0.00001
+            self.time_adjustment = clamp(self.time_adjustment, -frame_time, frame_time)
 
-            real_wait_time = frame_time - loop_used - self.time_adjustment
-            real_wait_time = clamp(real_wait_time, 0, 1 / 60)
-            time.sleep(real_wait_time)
+            real_wait_time = frame_time - loop_used  # - self.time_adjustment
+            real_wait_time = clamp(real_wait_time, 0, frame_time)
+
+            safe_sleep(real_wait_time)
 
     def game_loop(self, loop_delta_time: float):
-        """[summary]
+        """
+        [summary]
 
         Args:
             loop_delta_time (float): Time elapsed since last game_loop (seconds)
