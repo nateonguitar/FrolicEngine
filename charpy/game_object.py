@@ -7,10 +7,11 @@ class GameObject():
     def __init__(self, **kwargs):
         # for type hinting
         self._matrix: Matrix = None
+        self._position: Vector2 = None
         # set the real thing
         self.matrix = kwargs.get('matrix', Matrix())
-        self.position = Vector2(x=0, y=0)
-
+        self.position = kwargs.get('position', Vector2(x=0, y=0))
+        
 
     @property
     def game_instance(self):
