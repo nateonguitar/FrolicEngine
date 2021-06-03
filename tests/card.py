@@ -34,8 +34,8 @@ class TestGame(Game):
         )
         self.current_border_index = 0
 
-    def update(self, deltatime: datetime.timedelta):
-        self.time_since_swap += deltatime.total_seconds()
+    def update(self, deltatime: float):
+        self.time_since_swap += deltatime
         if self.time_since_swap >= self.time_between_border_swaps:
             self.time_since_swap = 0
             self.current_border_index += 1
@@ -43,11 +43,11 @@ class TestGame(Game):
                 self.current_border_index = 0
 
     def draw(self):
-        self.screen.set(0, 0, 'press w to swap borders')
+        self.screen.set(0, 0, 'The border values change once per second')
         _border = self.borders[self.current_border_index]
         _matrix = self.card.matrix.with_border(_border)
         self.screen.draw_matrix(_matrix, self.card.position)
         super().draw()
 
 game = TestGame()
-game.game_loop()
+game.run()
