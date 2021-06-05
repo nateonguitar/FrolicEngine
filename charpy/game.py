@@ -30,7 +30,7 @@ class Game(ABC):
         self.input_controller = InputController(self)
         self.input_controller.start_watching_key_presses()
         self.printer.clear_screen()
-        self.clear_set_empty_screen()
+        self._clear_set_empty_screen()
 
         # FPS and timming
         self.fps_target: int = fps
@@ -39,7 +39,7 @@ class Game(ABC):
         self.time_adjustment: float = 0
         self.last_loop_start_time: float = timestamp() - 1 / self.fps_target
 
-    def clear_set_empty_screen(self):
+    def _clear_set_empty_screen(self):
         self.screen = self.printer.get_empty_screen()
 
     @abstractmethod
@@ -82,7 +82,7 @@ class Game(ABC):
                 i += 1
 
         self.printer.draw_screen(self.screen)
-        self.clear_set_empty_screen()
+        self._clear_set_empty_screen()
 
     def run(self):
         """
