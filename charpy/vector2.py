@@ -1,4 +1,4 @@
-
+from __future__ import annotations
 import math
 class Vector2():
 
@@ -11,27 +11,27 @@ class Vector2():
         return self.x == other.x and self.y == other.y
 
 
-    def clone(self):
+    def clone(self) -> Vector2:
         """Returns a new copy of the Vector2"""
         return Vector2(self.x, self.y)
 
     
-    def add(self, other):
+    def add(self, other) -> Vector2:
         """Returns a new Vector2 of this + other"""
         return Vector2(x=self.x + other.x, y=self.y + other.y)
 
 
-    def subtract(self, other):
+    def subtract(self, other) -> Vector2:
         """Returns a new Vector2 of this - other"""
         return Vector2(x=self.x - other.x, y=self.y - other.y)
 
     
-    def scale(self, scale):
+    def scale(self, scale) -> Vector2:
         """Returns a new Vector2 with each axis * scale"""
         return Vector2(x=self.x * scale, y=self.y * scale)
 
 
-    def dot(self, other):
+    def dot(self, other) -> float:
         return (self.x * other.x) + (self.y * other.y)
 
 
@@ -40,7 +40,7 @@ class Vector2():
 
 
     @staticmethod
-    def zero():
+    def zero() -> Vector2:
         return Vector2(x=0, y=0)
 
 
