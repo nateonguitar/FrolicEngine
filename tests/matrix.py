@@ -137,3 +137,21 @@ print(e_section8)
 # should be just the character at e[0][0] since we don't allow out of bounds
 e_section7 = e.section(top_left=Vector2(-1, -1), bottom_right=Vector2(0, 0), allow_overflow=False)
 print(e_section7)
+
+A = Matrix([
+    [' ', ' ', ' ', ' ',],
+    [' ', ' ', ' ', ' ',],
+    [' ', ' ', ' ', ' ',],
+    [' ', ' ', ' ', ' ',],
+])
+X = Matrix([
+    ['X', 'X',],
+    ['X', 'X',],
+])
+B = A.apply(X, Vector2(1, 1))
+C = A.apply(X, Vector2(2, 2))
+D = A.apply(X, Vector2(3, 3))
+
+print(B)
+print(C)
+print(D)

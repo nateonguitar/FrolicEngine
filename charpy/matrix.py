@@ -187,6 +187,58 @@ class Matrix():
 
         return Matrix(m)
 
+    
+    def apply(self, other: Matrix, position: Vector2) -> Matrix:
+        """
+        Applies other to self in the given location.
+        If the position or other's vector size goes out of bounds it gets ignored.
+
+        Example:
+        ```
+        A = Matrix([
+            [' ', ' ', ' ', ' ',],
+            [' ', ' ', ' ', ' ',],
+            [' ', ' ', ' ', ' ',],
+            [' ', ' ', ' ', ' ',],
+        ])
+        X = Matrix([
+            ['X', 'X',],
+            ['X', 'X',],
+        ])
+        B = A.apply(X, Vector2(1, 1))
+        C = A.apply(X, Vector2(2, 2))
+        D = A.apply(X, Vector2(3, 3))
+        ```
+
+        Will result in:
+
+        ```
+        B [ ,  ,  ,  ]
+          [ , X, X,  ]
+          [ , X, X,  ]
+          [ ,  ,  ,  ]
+
+        C [ ,  ,  ,  ]
+          [ ,  ,  ,  ]
+          [ ,  , X, X]
+          [ ,  , X, X]
+
+        D [ ,  ,  ,  ]
+          [ ,  ,  ,  ]
+          [ ,  ,  ,  ]
+          [ ,  ,  , X]
+        ```
+        """
+        m = self.clone()
+        self_size = self.size
+        other_size = other.size
+        for i in range(other_size.y):
+            for j in range(other_size.x):
+                charpos = Vector2(x=j+position.x, y=i+position.y)
+                if 0 <= charpos.y < self_size.y and 0 <= charpos.x < self_size.x:
+                    m[charpos.y][charpos.x] = other.matrix[i][j]
+        return m
+
 
     def __str__(self):
         if (len(self.matrix)) == 0:
