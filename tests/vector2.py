@@ -64,14 +64,31 @@ except:
 
 
 try:
-    v1 = Vector2(x=5, y=10).dot(Vector2(x=3, y=2))
-    v2 = Vector2(x=2, y=3).dot(Vector2(x=-3, y=-5))
-    v3 = Vector2(x=4, y=4).dot(Vector2(x=-1, y=1))
-    test = 'v1 == 35'
+    v1 = Vector2(5, 10.2).dot(Vector2(3, 2))
+    v2 = Vector2(2, 3).dot(Vector2(-3, -5))
+    v3 = Vector2(4, 4).dot(Vector2(-1, 1))
+    v4 = Vector2(1.1, 2.2).dot(Vector2(3.3, 4.4))
+    test = 'type(v1) is float'
+    assert(eval(test))
+    test = 'type(v2) is int'
+    assert(eval(test))
+    test = 'type(v3) is int'
+    assert(eval(test))
+    test = 'type(v4) is float'
+    assert(eval(test))
+    test = 'v1 == 35.4'
     assert(eval(test))
     test = 'v2 == -21'
     assert(eval(test))
     test = 'v3 == 0'
+    assert(eval(test))
+    # floating point error makes v4 == 13.310000000000002 on 64 bit windows
+    # Wolfram Alpha says it is exactly 13.31
+    # https://www.wolframalpha.com/input/?
+    #   i=dot+product+calculator
+    #   &assumption={"F","DotProduct","dotVector1"}->"{1.1,2.2}"
+    #   &assumption={"F","DotProduct","dotVector2"}->"{3.3,4.4}"
+    test = '13.310000 < v4 < 13.3100001'
     assert(eval(test))
     print(f'{GREEN}{BRIGHT}PASSED:{RESET_ALL} dot')
 except:
@@ -88,11 +105,11 @@ except:
 
 
 try:
-    equality1 = Vector2(x=5, y=10)
-    equality2 = Vector2(x=5, y=10)
-    test = 'equality1 == equality2'
+    v1 = Vector2(x=5, y=10)
+    v2 = Vector2(x=5, y=10)
+    test = 'v1 == v2'
     assert(eval(test))
-    test = 'equality1 is not equality2'
+    test = 'v1 is not v2'
     assert(eval(test))
     print(f'{GREEN}{BRIGHT}PASSED:{RESET_ALL} equality check')
 except:
@@ -100,11 +117,11 @@ except:
 
 
 try:
-    clone1 = Vector2(x=5, y=10)
-    clone2 = clone1.clone()
-    test = 'clone1 == clone2'
+    v1 = Vector2(x=5, y=10)
+    v2 = v1.clone()
+    test = 'v1 == v2'
     assert(eval(test))
-    test = 'clone1 is not clone2'
+    test = 'v1 is not v2'
     assert(eval(test))
     print(f'{GREEN}{BRIGHT}PASSED:{RESET_ALL} clone')
 except:
