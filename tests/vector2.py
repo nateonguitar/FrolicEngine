@@ -105,11 +105,11 @@ except:
 
 
 try:
-    equality1 = Vector2(x=5, y=10)
-    equality2 = Vector2(x=5, y=10)
-    test = 'equality1 == equality2'
+    v1 = Vector2(x=5, y=10)
+    v2 = Vector2(x=5, y=10)
+    test = 'v1 == v2'
     assert(eval(test))
-    test = 'equality1 is not equality2'
+    test = 'v1 is not v2'
     assert(eval(test))
     print(f'{GREEN}{BRIGHT}PASSED:{RESET_ALL} equality check')
 except:
@@ -117,11 +117,11 @@ except:
 
 
 try:
-    clone1 = Vector2(x=5, y=10)
-    clone2 = clone1.clone()
-    test = 'clone1 == clone2'
+    v1 = Vector2(x=5, y=10)
+    v2 = v1.clone()
+    test = 'v1 == v2'
     assert(eval(test))
-    test = 'clone1 is not clone2'
+    test = 'v1 is not v2'
     assert(eval(test))
     print(f'{GREEN}{BRIGHT}PASSED:{RESET_ALL} clone')
 except:
