@@ -21,6 +21,7 @@ setup(
     install_requires=[
         'pynput',
         'numpy',
+        'colorama',
     ],
     classifiers=[
         'Intended Audience :: Fun',
