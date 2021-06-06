@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from charpy.matrix_border import MatrixBorder
 from .vector2 import Vector2
 
@@ -133,6 +135,60 @@ class Matrix():
             row[size.x-1] = border.right
 
         return Matrix(_matrix)
+
+    
+    def section(self, top_left: Vector2, bottom_right: Vector2, allow_overflow: bool=True) -> Matrix:
+        """
+        Returns a section of the matrix as another matrix.
+        `top_left` and `bottom_right` are both inclusive.
+
+        Example:
+        ```
+        e = Matrix([
+            ['a', 'b', 'c'],
+            ['d', 'e', 'f'],
+            ['g', 'h', 'i'],
+        ])
+        _e = e.section(Vector2(0, 0), Vector2(1, 1))
+        # results in
+        # Matrix
+        # ['a', 'b']
+        # ['d', 'e']
+
+        _e = e.section(Vector2(-1, -1), Vector2(1, 1))
+        # results in
+        # Matrix
+        # [None, None, None]
+        # [None, a, b]
+        # [None, d, e]
+
+        _e = e.section(Vector2(-1, -1), Vector2(1, 1), allow_overflow=False)
+        # results in
+        # Matrix
+        # [a, b]
+        # [d, e]
+
+        _e = e.section(Vector2(0, 0), Vector2(0, 0))
+        # Matrix
+        # [a]
+        ```
+        """
+        m = []
+        _size = self.size
+        for i in range(top_left.y, bottom_right.y+1):
+            row = []
+            for j in range(top_left.x, bottom_right.x+1):
+                if 0 <= i < _size.y and 0 <= j < _size.x:
+                    row.append(self[i][j])
+                elif allow_overflow:
+                    row.append(None)
+            if len(row) > 0:
+                m.append(row)
+        try:
+            _m = Matrix(m)
+        except:
+            import pdb; pdb.set_trace()
+        return Matrix(m)
 
 
     def __str__(self):
