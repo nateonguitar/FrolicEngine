@@ -22,7 +22,11 @@ class Screen():
                     continue
                 x = j + int(position.x)
                 y = i + int(position.y)
-                self.set(y=y, x=x, value=char)
+                self.set(y=y, x=x, char=char)
+
+
+    def draw_string(self, string: str, position: Vector2):
+        self.draw_matrix(Matrix([string]), position)
 
 
     def apply(self, screen):
@@ -42,9 +46,9 @@ class Screen():
             return None
 
 
-    def set(self, x, y, value):
+    def set(self, x, y, char):
         """
-        Sets the value in this screen's matrix.
+        Sets the char in this screen's matrix.
         Resizes larger (with None values) if x or y indexes are out of bound.
         """
         current_size = self.size
@@ -60,7 +64,7 @@ class Screen():
             for row in self._matrix:
                 for _x in range(0, diff.x+1):
                     row.append(None)
-        self._matrix[y][x] = value
+        self._matrix[y][x] = char
 
     @property
     def size(self) -> Vector2:
