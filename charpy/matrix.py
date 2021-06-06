@@ -184,10 +184,7 @@ class Matrix():
                     row.append(None)
             if len(row) > 0:
                 m.append(row)
-        try:
-            _m = Matrix(m)
-        except:
-            import pdb; pdb.set_trace()
+
         return Matrix(m)
 
 
