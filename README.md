@@ -208,6 +208,8 @@ class Card(GameObject):
 
 A simple example to copy/paste: [example_game.py](example_game.py)
 
+Another simple game that creates a viewport (for a game like zelda) [example_game_viewport.py](example_game_viewport.py)
+
 A more fleshed out full Tetris example:
 [CharPyTetris](https://github.com/nateonguitar/CharPyTetris)
 
