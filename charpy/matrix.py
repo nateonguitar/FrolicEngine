@@ -187,6 +187,93 @@ class Matrix():
 
         return Matrix(m)
 
+    
+    def apply(self, other: Matrix, position: Vector2, apply_nones: bool = False) -> Matrix:
+        """
+        Applies other to self in the given location.
+        If the position or other's vector size goes out of bounds it gets ignored.
+        If `apply_nones` == True it will copy over the None values,
+        if left as the default (False) it will skip over applying Nones (Example 2)
+
+        Example:
+        ```
+        A = Matrix([
+            ['.', '.', '.', '.',],
+            ['.', '.', '.', '.',],
+            ['.', '.', '.', '.',],
+            ['.', '.', '.', '.',],
+        ])
+        X = Matrix([
+            ['X', 'X',],
+            ['X', 'X',],
+        ])
+        B = A.apply(X, Vector2(1, 1))
+        C = A.apply(X, Vector2(2, 2))
+        D = A.apply(X, Vector2(3, 3))
+        ```
+
+        Will result in:
+
+        ```
+        B [., ., ., .,]
+          [., X, X, .,]
+          [., X, X, .,]
+          [., ., ., .,]
+
+        C [., ., ., .,]
+          [., ., ., .,]
+          [., ., X, X,]
+          [., ., X, X,]
+
+        D [., ., ., .,]
+          [., ., ., .,]
+          [., ., ., .,]
+          [., ., ., X,]
+        ```
+
+        ## Apply Nones:
+        ```
+        `apply_nones=False` (Default)
+        A = Matrix([
+            ['.', '.', '.', '.',],
+            ['.', '.', '.', '.',],
+            ['.', '.', '.', '.',],
+            ['.', '.', '.', '.',],
+        ])
+        X = Matrix([
+            [None, 'X',  'X',],
+            [None, 'X',  'X',],
+            [None, None, None],
+        ])
+        ```
+
+        `apply_nones=True`
+        ```
+        B = A.apply(X, Vector2(x=0, y=1))
+        B [   .,    .,    .,    .,]
+          [   .,    X,    X,    .,]
+          [   .,    X,    X,    .,]
+          [   .,    .,    .,    .,]
+
+        B = A.apply(X, Vector2(x=0, y=1), apply_nones=True)
+        B [   .,    .     .,    .,]
+          [None,    X,    X,    .,]
+          [None,    X,    X,    .,]
+          [None, None, None,    .,]
+        ```
+        """
+        m = self.clone()
+        self_size = self.size
+        other_size = other.size
+        for i in range(other_size.y):
+            for j in range(other_size.x):
+                charpos = Vector2(x=j+position.x, y=i+position.y)
+                if 0 <= charpos.y < self_size.y and 0 <= charpos.x < self_size.x:
+                    char = other.matrix[i][j]
+                    if char is not None or (char is None and apply_nones):
+                        m[charpos.y][charpos.x] = char
+        return m
+
 
     def __str__(self):
         if (len(self.matrix)) == 0:
