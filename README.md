@@ -212,6 +212,8 @@ Another simple game that creates a viewport (for a game like zelda) [example_gam
 
 A more fleshed out full Tetris example:
 [CharPyTetris](https://github.com/nateonguitar/CharPyTetris)
+Bundle-Breaker (a match 3 game):
+[CharPyBundleBreaker](https://github.com/nateonguitar/CharPyBundleBreaker)
 
 # Developing CharPy
 
