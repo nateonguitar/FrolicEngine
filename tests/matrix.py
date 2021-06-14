@@ -1,4 +1,4 @@
-from charpy.matrix import Matrix, Vector2
+from frolic.matrix import Matrix, Vector2
 
 
 e = Matrix([

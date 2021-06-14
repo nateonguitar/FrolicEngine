@@ -3,5 +3,5 @@
 venv/
 .venv/
 build/*
-charpy.egg-info
+frolic.egg-info
 dist/*

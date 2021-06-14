@@ -1,6 +1,6 @@
 import os
 
-from charpy.screen import Screen
+from frolic.screen import Screen
 
 class ConsolePrinter():
     

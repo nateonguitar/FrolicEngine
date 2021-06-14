@@ -1,5 +1,5 @@
-from charpy.matrix import Matrix
-from charpy.matrix_border import MatrixBorder
+from frolic.matrix import Matrix
+from frolic.matrix_border import MatrixBorder
 
 matrix1 = Matrix.empty_sized(rows=3, columns=4, value='.')
 print(matrix1)

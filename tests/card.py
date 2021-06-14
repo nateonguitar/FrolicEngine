@@ -1,5 +1,5 @@
 import datetime
-from charpy import Game, GameObject, Matrix, MatrixBorder, Vector2
+from frolic import Game, GameObject, Matrix, MatrixBorder, Vector2
 
 class Card(GameObject):
     def __init__(self):

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from charpy.matrix_border import MatrixBorder
+from frolic.matrix_border import MatrixBorder
 from .vector2 import Vector2
 
 class Matrix():

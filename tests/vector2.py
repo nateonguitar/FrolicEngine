@@ -1,4 +1,4 @@
-from charpy import Vector2
+from frolic import Vector2
 import colorama
 
 GREEN = colorama.Fore.GREEN
