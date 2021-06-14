@@ -1,13 +1,7 @@
 # Installation
 
 ```
-pip install frolic
-```
-
-Frolic Engine depends on a few packages, so to get it running they will need to be installed as well
-
-```
-pip install pynput numpy colorama
+pip install frolic-engine
 ```
 
 # Creating a basic game
