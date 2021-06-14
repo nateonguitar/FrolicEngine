@@ -2,7 +2,7 @@
 
 import datetime
 
-from charpy import Game, GameObject, Matrix, MatrixBorder, Vector2
+from frolic import Game, GameObject, Matrix, MatrixBorder, Vector2
 from pynput import keyboard
 
 
@@ -57,7 +57,7 @@ class ExampleGame(Game):
         else:
             # on escape kill the game
             if key == keyboard.Key.esc:
-                # end_game() is from charpy.Game
+                # end_game() is from frolic.Game
                 self.end_game()
                 return
 

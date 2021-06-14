@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-from charpy.console_printer import ConsolePrinter
-from charpy.input_controller import InputController
-from charpy.screen import Screen
+from frolic.console_printer import ConsolePrinter
+from frolic.input_controller import InputController
+from frolic.screen import Screen
 
 from .utils import clamp, safe_sleep, timestamp
 

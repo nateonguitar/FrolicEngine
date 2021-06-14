@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from charpy import Game, GameObject, Matrix, MatrixBorder, Screen, Vector2
+from frolic import Game, GameObject, Matrix, MatrixBorder, Screen, Vector2
 from pynput import keyboard
 
 
@@ -94,7 +94,7 @@ class ExampleViewportGame(Game):
         self.level.on_key_down(key)
         char = key.char if hasattr(key, "char") else None
         if key == keyboard.Key.esc:
-            # end_game() is from charpy.Game
+            # end_game() is from frolic.Game
             self.end_game()
 
     def update(self, deltatime: float):

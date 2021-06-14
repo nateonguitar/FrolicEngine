@@ -1,6 +1,6 @@
-from charpy.game import Game
-from charpy.matrix import Matrix
-from charpy.vector2 import Vector2
+from frolic.game import Game
+from frolic.matrix import Matrix
+from frolic.vector2 import Vector2
 
 class GameObject():
 

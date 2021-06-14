@@ -1,5 +1,5 @@
-from charpy.vector2 import Vector2
-from charpy.matrix import Matrix
+from frolic.vector2 import Vector2
+from frolic.matrix import Matrix
 
 class Screen():
 

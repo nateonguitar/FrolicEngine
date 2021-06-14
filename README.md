@@ -1,7 +1,7 @@
 # Installation
 
 ```
-pip install charpy
+pip install frolic-engine
 ```
 
 # Creating a basic game
@@ -10,7 +10,7 @@ Create a class that inherits from `Game`, provide an `__init__()` and call `supe
 Overriding `update()` and `draw()` are required.
 ```python
 import datetime
-from charpy import Game
+from frolic import Game
 
 class TestGame(Game):
     def __init__(self):
@@ -30,7 +30,7 @@ class TestGame(Game):
 Launch the game by calling the game's `run()` function.
 This example so far will just produce an empty screen.
 ```python
-from charpy import Game
+from frolic import Game
 
 class TestGame(Game):
     . . .
@@ -43,7 +43,7 @@ game.run()
 Handling inputs.
 Notice the `keyboard` import.
 ```python
-from charpy import Game
+from frolic import Game
 from pynput import keyboard
 
 class TestGame(Game):
@@ -62,7 +62,7 @@ class TestGame(Game):
         else:
             # on escape kill the game
             if key == keyboard.Key.esc:
-                # end_game() is inherited from charpy.Game
+                # end_game() is inherited from frolic.Game
                 self.end_game()
                 return
 ```
@@ -72,7 +72,7 @@ To draw characters/symbols to the screen override the `draw()` function.
 Set values on the screen to have them show up in the console.
 
 ```python
-from charpy import Game, Matrix, Vector2
+from frolic import Game, Matrix, Vector2
 class TestGame(Game):
     . . .
 
@@ -115,7 +115,7 @@ class TestGame(Game):
 Instances of `GameObject` are a convenience class to represent objects in the game.
 They have a `matrix` that is of type `Matrix` and a `position` that is of type `Vector2`.
 ```python
-from charpy import Game, GameObject, Matrix, Vector2
+from frolic import Game, GameObject, Matrix, Vector2
 from pynput import keyboard
 
 class Player(GameObject):
