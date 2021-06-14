@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='frolic-engine',
-    version='1.0.1',
+    version='1.0.2',
     license='MIT',
     url='https://github.com/nateonguitar/FrolicEngine',
     description='A game engine that lets you write text/ansii based games, targets 60fps.',
