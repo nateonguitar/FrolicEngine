@@ -206,13 +206,20 @@ class Card(GameObject):
 
 # Examples
 
-A simple example to copy/paste: [example_game.py](example_game.py)
+A simple example to copy/paste
 
-Another simple game that creates a viewport (for a game like zelda) [example_game_viewport.py](example_game_viewport.py)
+[example_game.py](example_game.py)
 
-A more fleshed out full Tetris example:
+Another simple game that creates a viewport (for a game like zelda)
+
+[example_game_viewport.py](example_game_viewport.py)
+
+Tetris
+
 [FrolicEngineTetris](https://github.com/nateonguitar/FrolicEngineTetris)
-Bundle-Breaker (a match 3 game):
+
+Bundle-Breaker (a match 3 game)
+
 [FrolicEngineBundleBreaker](https://github.com/nateonguitar/FrolicEngineBundleBreaker)
 
 # Developing Frolic Engine
